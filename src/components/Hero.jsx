@@ -35,7 +35,7 @@ import {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
   
           {/* ================= HERO ================= */}
-  
+
           <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center min-h-[75vh]">
   
             {/* Left */}
@@ -43,7 +43,7 @@ import {
   
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-black mt-7 leading-[1.05] tracking-tight">
                 Art made by hand.
-                <span className="block text-green mt-2">
+                <span className="block mt-2">
                   Made to be remembered.
                 </span>
               </h1>
