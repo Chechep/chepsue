@@ -11,13 +11,10 @@ export default function Footer() {
 
   return (
     <footer className="bg-white text-black">
-
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
 
         {/* Top */}
         <div className="grid md:grid-cols-3 gap-12">
-
-          {/* Brand */}
           <div>
             <div className="flex items-center gap-3">
 
@@ -69,9 +66,7 @@ export default function Footer() {
                 >
                   <path d="M6.62 10.79a15.46 15.46 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1C10.16 21 3 13.84 3 5a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.25 1.02l-2.2 2.2z" />
                 </svg>
-
                 +254 713 428 383
-
               </a>
 
 
@@ -107,11 +102,8 @@ export default function Footer() {
                     d="M3 7l2-2h2v1.2L3 9.5V7zM19 7l-2-2h-2v1.2l4 3.3V7z"
                   />
                 </svg>
-
                 chepsuearts@gmail.com
-
               </a>
-
 
               {/* Instagram */}
               <a
@@ -167,11 +159,7 @@ export default function Footer() {
                     fill="url(#instagramGradient)"
                   />
                 </svg>
-
                 Instagram
-
-                <ArrowUpRight size={15} />
-
               </a>
 
             </div>

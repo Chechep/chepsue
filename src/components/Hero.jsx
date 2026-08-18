@@ -1,13 +1,5 @@
-import {
-    ArrowRight,
-    Brush,
-    Sparkles,
-    Award,
-    Heart,
-    Palette,
-    Star,
-  } from "lucide-react";
-  
+import { Brush, Sparkles, Award, Heart, Palette, Star, } from "lucide-react";
+
   export default function Hero() {
     const values = [
       {
@@ -42,7 +34,7 @@ import {
             <div className="max-w-2xl">
   
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-black mt-7 leading-[1.05] tracking-tight">
-                Art made by hand.
+                Hand made art
                 <span className="block mt-2">
                   Made to be remembered.
                 </span>
@@ -122,34 +114,15 @@ import {
   
                 <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
   
-                <div className="absolute bottom-6 left-6">
-                  <div className="inline-flex items-center gap-2 bg-white/90 backdrop-blur-md px-4 py-2.5 rounded-full shadow-lg">
-  
-                    <span className="w-2 h-2 bg-green rounded-full" />
-  
-                    <span className="text-sm font-medium text-black">
-                      Crafted by Chepsue Arts
-                    </span>
-  
-                  </div>
-                </div>
-  
               </div>
             </div>
   
           </div>
   
-  
           {/* ================= ABOUT ================= */}
   
           <div className="mt-28 lg:mt-36 pt-16 border-t border-black/10">
-  
             <div className="max-w-3xl">
-  
-              <span className="inline-flex items-center px-4 py-2 rounded-full border border-black/10 bg-black/[0.02] text-sm font-medium text-gray-700">
-                Our Story
-              </span>
-  
               <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-black mt-6 tracking-tight">
                 Creativity you can
                 <span className="text-green"> feel.</span>
@@ -198,29 +171,8 @@ import {
                   </div>
                 );
               })}
-  
             </div>
-  
-  
-            {/* Bottom */}
-            <div className="mt-14 pt-8 border-t border-black/10 flex flex-col md:flex-row items-center justify-between gap-5">
-  
-              <p className="text-gray-500 text-sm">
-                Handmade. Creative. Personal.
-              </p>
-  
-              <a
-                href="#products"
-                className="text-black font-semibold text-sm flex items-center gap-2 transition-transform duration-300 hover:translate-x-1"
-              >
-                Explore our creations
-                <span className="text-green">→</span>
-              </a>
-  
-            </div>
-  
           </div>
-  
         </div>
       </section>
     );
