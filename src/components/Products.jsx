@@ -1,111 +1,92 @@
-import { ArrowRight, ShoppingBag } from "lucide-react";
+import { ArrowRight, Check, ShoppingBag } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 import products from "../data/product";
 
 export default function Products() {
+  const [toast, setToast] = useState(false);
+
+  const addToOrder = (product) => {
+    const orders = JSON.parse(localStorage.getItem("chepsueOrders") || "[]");
+    const existing = orders.find((item) => item.id === product.id);
+
+    if (existing) existing.quantity += 1;
+    else orders.push({ ...product, quantity: 1, size: "", color: "" });
+
+    localStorage.setItem("chepsueOrders", JSON.stringify(orders));
+    setToast(true);
+    setTimeout(() => setToast(false), 2000);
+  };
+
   return (
-    <section
-      id="products"
-      className="py-24 lg:py-32 bg-white"
-    >
+    <section id="products" className="min-h-screen bg-white pt-32 pb-24">
+      {toast && (
+        <div className="fixed top-24 right-6 z-[60] flex items-center gap-3 bg-black text-white px-5 py-3 rounded-xl shadow-xl">
+          <Check size={18} className="text-green" />
+          Added to order list
+        </div>
+      )}
+
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-
-        {/* Header */}
         <div className="max-w-3xl mx-auto text-center">
-
-          <span className="inline-flex items-center px-4 py-2 rounded-full border border-black/10 bg-black/[0.02] text-sm font-medium text-gray-700">
+          <span className="inline-flex px-4 py-2 rounded-full border border-black/10 bg-gray-50 text-sm font-medium text-gray-700">
             Our Collection
           </span>
 
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-black mt-6 tracking-tight">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-black mt-6 tracking-tight">
             Handmade pieces.
-            <span className="block text-green mt-2">
-              Made for you.
-            </span>
-          </h2>
+            <span className="block text-green mt-2">Made for you.</span>
+          </h1>
 
-          <p className="text-gray-600 text-lg leading-relaxed mt-6 max-w-2xl mx-auto">
-            Explore our collection of handcrafted art and decor,
-            or choose a piece and make it part of your story.
+          <p className="text-gray-600 text-lg leading-relaxed mt-6">
+            Explore our handcrafted art, jewellery, decor and custom creations.
           </p>
-
         </div>
 
-        {/* Products */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-16">
-
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6 mt-10">
           {products.map((product) => (
-            <article
-              key={product.id}
-              className="group rounded-3xl overflow-hidden border border-black/10 bg-white transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
-            >
-
-              {/* Image */}
-              <a
-                href={`/product/${product.id}`}
-                className="block"
-              >
+            <article key={product.id} className="group rounded-3xl overflow-hidden border border-black/20 bg-white transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+              <Link to={`/product/${product.id}`} className="block">
                 <div className="relative h-72 overflow-hidden bg-gray-100">
+                  <img src={product.image} alt={product.name} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
 
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-
-                  {/* Category */}
-                  <div className="absolute top-4 left-4">
-                    <span className="bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-medium text-black">
-                      {product.category}
-                    </span>
-                  </div>
-
+                  <span className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-medium text-black">
+                    {product.category}
+                  </span>
                 </div>
-              </a>
+              </Link>
 
-              {/* Content */}
               <div className="p-6">
-
                 <div className="flex items-start justify-between gap-4">
-
                   <div>
-                    <h3 className="text-xl font-bold text-black">
-                      {product.name}
-                    </h3>
-
-                    <p className="text-gray-500 text-sm mt-2 leading-relaxed">
-                      {product.description}
-                    </p>
+                    <h2 className="text-xl font-bold text-black">{product.name}</h2>
+                    <p className="text-gray-500 text-sm mt-2 leading-relaxed">{product.description}</p>
                   </div>
 
-                  <div className="w-10 h-10 shrink-0 rounded-xl bg-green/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-                    <ShoppingBag
-                      size={18}
-                      className="text-green"
-                    />
+                  <div className="w-10 h-10 shrink-0 rounded-xl bg-green/10 flex items-center justify-center group-hover:scale-110 transition">
+                    <ShoppingBag size={18} className="text-green" />
                   </div>
-
                 </div>
 
-                {/* Button */}
-                <a
-                  href={`/product/${product.id}`}
-                  className="group/button mt-6 w-full border border-black/10 text-black py-3 rounded-xl flex items-center justify-center gap-2 font-medium transition-all duration-300 hover:bg-black hover:text-white"
-                >
-                  View Product
+                {product.price && (
+                  <p className="text-lg font-bold text-black mt-5">
+                    KSh {product.price.toLocaleString()}
+                  </p>
+                )}
 
-                  <ArrowRight
-                    size={17}
-                    className="transition-transform duration-300 group-hover/button:translate-x-1"
-                  />
-                </a>
+                <div className="grid grid-cols-2 gap-3 mt-5">
+                  <Link to={`/product/${product.id}`} className="border border-black/10 py-3 rounded-xl flex items-center justify-center gap-2 text-sm font-medium hover:bg-black hover:text-white transition">
+                    View <ArrowRight size={16} />
+                  </Link>
 
+                  <button onClick={() => addToOrder(product)} className="bg-black text-white py-3 rounded-xl flex items-center justify-center gap-2 text-sm font-semibold hover:bg-green transition">
+                    <ShoppingBag size={17} /> Add
+                  </button>
+                </div>
               </div>
-
             </article>
           ))}
-
         </div>
-
       </div>
     </section>
   );

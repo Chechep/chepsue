@@ -1,440 +1,278 @@
-import { useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import {
-  ArrowLeft,
-  CheckCircle2,
-  Mail,
-  MapPin,
-  MessageCircle,
-  Package,
-  Phone,
-  Send,
-  User,
-} from "lucide-react";
+import { useEffect, useState } from "react";
+import { ArrowLeft, CheckCircle2, Mail, MapPin, Package, Phone, Send, Trash2, Plus, Minus } from "lucide-react";
+import { Link } from "react-router-dom";
+import products from "../data/product";
 
-const products = [
-  "Wall Decor",
-  "Abstract Line Art",
-  "Origami Ceiling Art",
-  "Loom Beading",
-  "Beaded Jewellery",
-  "Crochet",
-  "Macrame",
-  "Custom Artwork",
-];
+const whatsappNumber = "254713428383";
 
 export default function Order() {
-  const [searchParams] = useSearchParams();
-
-  const selectedProduct = searchParams.get("product") || "";
-
-  const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    product: selectedProduct,
-    quantity: 1,
-    size: "",
-    color: "",
-    location: "",
-    message: "",
-  });
-
+  const [orderItems, setOrderItems] = useState([]);
+  const [formData, setFormData] = useState({ name: "", phone: "", email: "", location: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    const saved = JSON.parse(localStorage.getItem("chepsueOrderList") || "[]");
+    setOrderItems(saved);
+  }, []);
+
+  const updateItems = (items) => {
+    setOrderItems(items);
+    localStorage.setItem("chepsueOrderList", JSON.stringify(items));
+  };
+
+  const increaseQuantity = (id) => {
+    updateItems(orderItems.map((item) => item.id === id ? { ...item, quantity: item.quantity + 1 } : item));
+  };
+
+  const decreaseQuantity = (id) => {
+    updateItems(orderItems.map((item) => item.id === id ? { ...item, quantity: Math.max(1, item.quantity - 1) } : item));
+  };
+
+  const removeItem = (id) => {
+    updateItems(orderItems.filter((item) => item.id !== id));
+  };
+
+  const updateItem = (id, field, value) => {
+    updateItems(orderItems.map((item) => item.id === id ? { ...item, [field]: value } : item));
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    /*
-      Replace this with your backend/API later.
-
-      For now, the order is prepared and can be sent
-      directly to Chepsue Arts through WhatsApp.
-    */
-
-    const message = `
+  const createMessage = () => `
 CHEPSUE ARTS ORDER
 
-Customer: ${formData.name}
+CUSTOMER DETAILS
+Name: ${formData.name}
 Phone: ${formData.phone}
-Email: ${formData.email}
-
-Product: ${formData.product}
-Quantity: ${formData.quantity}
-Size: ${formData.size || "Not specified"}
-Color: ${formData.color || "Not specified"}
-
+Email: ${formData.email || "Not provided"}
 Location: ${formData.location}
 
-Additional details:
+ORDER
+${orderItems.map((item, index) => `
+${index + 1}. ${item.name}
+Quantity: ${item.quantity}
+Size: ${item.size || "Not specified"}
+Color: ${item.color || "Not specified"}
+Price: ${item.price ? `KSh ${item.price.toLocaleString()}` : "Price to confirm"}
+`).join("\n")}
+
+ADDITIONAL DETAILS
 ${formData.message || "None"}
-    `;
 
-    const whatsappNumber = "254713428383";
+Please confirm availability, final price and delivery details.
+`;
 
-    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-      message
-    )}`;
+  const orderOnWhatsApp = () => {
+    if (!orderItems.length) return alert("Please add at least one product to your order.");
+    if (!formData.name || !formData.phone || !formData.location) return alert("Please complete your name, phone number and delivery location.");
 
-    window.open(whatsappUrl, "_blank");
+    window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(createMessage())}`, "_blank");
+    setSubmitted(true);
+  };
 
+  const submitOrder = (e) => {
+    e.preventDefault();
+    if (!orderItems.length) return alert("Please add at least one product to your order.");
+
+    const savedOrders = JSON.parse(localStorage.getItem("chepsueOrderHistory") || "[]");
+
+    const newOrder = {
+      id: Date.now(),
+      date: new Date().toLocaleString(),
+      customer: formData,
+      items: orderItems
+    };
+
+    localStorage.setItem("chepsueOrderHistory", JSON.stringify([newOrder, ...savedOrders]));
     setSubmitted(true);
   };
 
   if (submitted) {
     return (
-      <main className="min-h-screen bg-gradient-to-br from-navy via-teal to-navy flex items-center justify-center px-6">
-        <div className="max-w-lg w-full bg-white rounded-3xl p-10 text-center shadow-2xl">
+      <main className="min-h-screen bg-white pt-32 pb-20 flex items-center justify-center px-6">
+        <div className="max-w-lg w-full bg-white border border-black/10 rounded-3xl p-10 text-center shadow-xl">
           <div className="w-20 h-20 bg-green/10 rounded-full flex items-center justify-center mx-auto">
             <CheckCircle2 className="w-10 h-10 text-green" />
           </div>
 
-          <h1 className="text-3xl font-bold text-navy mt-6">
-            Order Ready!
-          </h1>
+          <h1 className="text-3xl font-bold text-black mt-6">Order Ready!</h1>
 
           <p className="text-gray-600 mt-4">
-            Your order details have been prepared. Continue the conversation
-            with Chepsue Arts on WhatsApp to confirm your order.
+            Your order details have been prepared. We'll confirm availability,
+            pricing and delivery details with you.
           </p>
 
-          <a
-            href="/products"
-            className="inline-flex items-center gap-2 mt-8 px-6 py-3 rounded-full bg-green text-white font-medium hover:bg-green/90 transition"
-          >
-            <ArrowLeft size={18} />
-            Back to Products
-          </a>
+          <div className="flex flex-col sm:flex-row gap-3 mt-8">
+            <Link to="/products" className="flex-1 flex items-center justify-center gap-2 bg-black text-white px-6 py-3 rounded-xl hover:bg-gray-800 transition">
+              <ArrowLeft size={17} /> Products
+            </Link>
+
+            <button onClick={() => setSubmitted(false)} className="flex-1 border border-black/10 px-6 py-3 rounded-xl hover:bg-gray-50 transition">
+              Back to Order
+            </button>
+          </div>
         </div>
       </main>
     );
   }
 
   return (
-    <main className="min-h-screen bg-[#f7f1ea] pt-28 pb-20">
-      <div className="max-w-6xl mx-auto px-6">
+    <main className="min-h-screen bg-white pt-32 pb-24">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
 
-        {/* Header */}
-        <div className="mb-10">
-          <a
-            href="/"
-            className="inline-flex items-center gap-2 text-teal hover:text-green transition"
-          >
-            <ArrowLeft size={18} />
-            Back to Home
-          </a>
+        <Link to="/products" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-black transition">
+          <ArrowLeft size={17} /> Back to Products
+        </Link>
 
-          <div className="mt-8">
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green/10 text-green text-sm font-medium">
-              <Package size={16} />
-              Custom Order
-            </span>
+        <div className="mt-8">
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-black/10 bg-gray-50 text-sm font-medium">
+            <Package size={16} /> Your Order
+          </span>
 
-            <h1 className="text-4xl md:text-5xl font-bold text-navy mt-4">
-              Create Your Order
-            </h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-black mt-5">Complete Your Order</h1>
 
-            <p className="text-gray-600 mt-3 max-w-2xl">
-              Tell us what you'd like and we'll get back to you with
-              availability, pricing and delivery details.
-            </p>
-          </div>
+          <p className="text-gray-600 mt-3 max-w-2xl">
+            Review your pieces, choose your options and send your order to Chepsue Arts.
+          </p>
         </div>
 
-        <div className="grid lg:grid-cols-[1fr_380px] gap-8">
+        <div className="grid lg:grid-cols-[1fr_380px] gap-8 mt-12">
 
-          {/* Form */}
-          <form
-            onSubmit={handleSubmit}
-            className="bg-white rounded-3xl p-6 md:p-10 shadow-xl"
-          >
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-11 h-11 rounded-xl bg-green/10 flex items-center justify-center">
-                <User className="text-green" size={21} />
-              </div>
+          <div className="space-y-6">
 
-              <div>
-                <h2 className="text-xl font-bold text-navy">
-                  Your Details
-                </h2>
+            <section className="bg-white border border-black/10 rounded-3xl p-6 md:p-8">
+              <h2 className="text-xl font-bold text-black">Your Order List</h2>
 
-                <p className="text-sm text-gray-500">
-                  Tell us how we can reach you.
-                </p>
-              </div>
-            </div>
+              {!orderItems.length ? (
+                <div className="text-center py-16">
+                  <Package className="mx-auto text-gray-300" size={45} />
+                  <h3 className="font-semibold text-black mt-5">Your order list is empty</h3>
+                  <p className="text-gray-500 text-sm mt-2">Add products from our collection.</p>
 
-            <div className="grid md:grid-cols-2 gap-5">
+                  <Link to="/products" className="inline-flex items-center gap-2 mt-6 bg-black text-white px-6 py-3 rounded-xl hover:bg-gray-800 transition">
+                    Browse Products <ArrowLeft size={16} className="rotate-180" />
+                  </Link>
+                </div>
+              ) : (
+                <div className="space-y-6 mt-6">
+                  {orderItems.map((item) => (
+                    <article key={item.id} className="border border-black/10 rounded-2xl p-4">
+                      <div className="flex gap-4">
+                        <img src={item.image} alt={item.name} className="w-24 h-24 sm:w-32 sm:h-32 object-cover rounded-xl" />
 
-              {/* Name */}
-              <div>
-                <label className="block text-sm font-medium text-navy mb-2">
-                  Full Name
-                </label>
+                        <div className="flex-1">
+                          <div className="flex justify-between gap-3">
+                            <div>
+                              <h3 className="font-bold text-black">{item.name}</h3>
+                              <p className="text-sm text-gray-500 mt-1">{item.category}</p>
+                            </div>
 
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="Your name"
-                  required
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 outline-none focus:border-green focus:ring-2 focus:ring-green/10"
-                />
-              </div>
+                            <button onClick={() => removeItem(item.id)} aria-label="Remove product" className="text-gray-400 hover:text-red-500 transition">
+                              <Trash2 size={18} />
+                            </button>
+                          </div>
 
-              {/* Phone */}
-              <div>
-                <label className="block text-sm font-medium text-navy mb-2">
-                  Phone Number
-                </label>
+                          {item.price && <p className="font-semibold mt-3">KSh {item.price.toLocaleString()}</p>}
 
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  placeholder="+254..."
-                  required
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 outline-none focus:border-green focus:ring-2 focus:ring-green/10"
-                />
-              </div>
+                          <div className="grid sm:grid-cols-3 gap-3 mt-4">
+                            <input value={item.size || ""} onChange={(e) => updateItem(item.id, "size", e.target.value)} placeholder="Size" className="w-full px-3 py-2 rounded-lg border border-black/10 outline-none focus:border-green" />
 
-              {/* Email */}
-              <div>
-                <label className="block text-sm font-medium text-navy mb-2">
-                  Email
-                </label>
+                            <input value={item.color || ""} onChange={(e) => updateItem(item.id, "color", e.target.value)} placeholder="Color" className="w-full px-3 py-2 rounded-lg border border-black/10 outline-none focus:border-green" />
 
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="you@example.com"
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 outline-none focus:border-green focus:ring-2 focus:ring-green/10"
-                />
-              </div>
+                            <div className="flex items-center justify-between border border-black/10 rounded-lg px-2">
+                              <button onClick={() => decreaseQuantity(item.id)} className="p-2 hover:bg-gray-100 rounded-lg">
+                                <Minus size={16} />
+                              </button>
 
-              {/* Product */}
-              <div>
-                <label className="block text-sm font-medium text-navy mb-2">
-                  Select Product
-                </label>
+                              <span className="font-semibold">{item.quantity}</span>
 
-                <select
-                  name="product"
-                  value={formData.product}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white outline-none focus:border-green"
-                >
-                  <option value="">Choose a product</option>
-
-                  {products.map((product) => (
-                    <option key={product} value={product}>
-                      {product}
-                    </option>
+                              <button onClick={() => increaseQuantity(item.id)} className="p-2 hover:bg-gray-100 rounded-lg">
+                                <Plus size={16} />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </article>
                   ))}
-                </select>
-              </div>
-
-              {/* Quantity */}
-              <div>
-                <label className="block text-sm font-medium text-navy mb-2">
-                  Quantity
-                </label>
-
-                <input
-                  type="number"
-                  name="quantity"
-                  min="1"
-                  value={formData.quantity}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 outline-none focus:border-green"
-                />
-              </div>
-
-              {/* Size */}
-              <div>
-                <label className="block text-sm font-medium text-navy mb-2">
-                  Size
-                </label>
-
-                <input
-                  type="text"
-                  name="size"
-                  value={formData.size}
-                  onChange={handleChange}
-                  placeholder="e.g. Small, Medium, Large"
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 outline-none focus:border-green"
-                />
-              </div>
-
-              {/* Color */}
-              <div>
-                <label className="block text-sm font-medium text-navy mb-2">
-                  Preferred Color
-                </label>
-
-                <input
-                  type="text"
-                  name="color"
-                  value={formData.color}
-                  onChange={handleChange}
-                  placeholder="e.g. Beige, Green..."
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 outline-none focus:border-green"
-                />
-              </div>
-
-              {/* Location */}
-              <div>
-                <label className="block text-sm font-medium text-navy mb-2">
-                  Delivery Location
-                </label>
-
-                <input
-                  type="text"
-                  name="location"
-                  value={formData.location}
-                  onChange={handleChange}
-                  placeholder="Town / City"
-                  required
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 outline-none focus:border-green"
-                />
-              </div>
-
-              {/* Message */}
-              <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-navy mb-2">
-                  Additional Details
-                </label>
-
-                <textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows="5"
-                  placeholder="Tell us anything else about your order..."
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 outline-none focus:border-green resize-none"
-                />
-              </div>
-
-            </div>
-
-            <button
-              type="submit"
-              className="w-full mt-8 bg-green hover:bg-green/90 text-white py-4 rounded-xl font-semibold flex items-center justify-center gap-3 transition"
-            >
-              <Send size={19} />
-              Send Order Request
-            </button>
-          </form>
-
-          {/* Sidebar */}
-          <aside className="space-y-6">
-
-            {/* Selected product */}
-            <div className="bg-navy rounded-3xl p-7 text-white">
-              <div className="w-12 h-12 rounded-2xl bg-green/20 flex items-center justify-center">
-                <Package className="text-green" />
-              </div>
-
-              <h3 className="text-xl font-bold mt-5">
-                Ordering from Chepsue Arts
-              </h3>
-
-              <p className="text-gray-300 mt-3 text-sm leading-6">
-                Each piece is handcrafted with attention to detail.
-                Submit your request and we'll confirm availability
-                and pricing.
-              </p>
-
-              {formData.product && (
-                <div className="mt-6 p-4 bg-white/10 rounded-2xl">
-                  <p className="text-xs text-gray-400">
-                    SELECTED PRODUCT
-                  </p>
-
-                  <p className="font-semibold text-lg mt-1 text-sand">
-                    {formData.product}
-                  </p>
                 </div>
               )}
-            </div>
+            </section>
 
-            {/* Contact */}
-            <div className="bg-white rounded-3xl p-7 shadow-lg">
-              <h3 className="font-bold text-xl text-navy">
-                Need Help?
-              </h3>
+            <form onSubmit={submitOrder} className="bg-white border border-black/10 rounded-3xl p-6 md:p-8">
+              <h2 className="text-xl font-bold text-black">Customer Details</h2>
 
-              <p className="text-gray-500 text-sm mt-2">
-                Contact Chepsue Arts directly if you need help choosing
-                a product or creating a custom piece.
-              </p>
+              <div className="grid md:grid-cols-2 gap-5 mt-6">
 
-              <div className="space-y-4 mt-6">
+                <input name="name" value={formData.name} onChange={handleChange} placeholder="Full Name *" required className="px-4 py-3 rounded-xl border border-black/10 outline-none focus:border-green" />
 
-                <a
-                  href="tel:+254713428383"
-                  className="flex items-center gap-4"
-                >
-                  <div className="w-10 h-10 rounded-xl bg-green/10 flex items-center justify-center">
-                    <Phone size={18} className="text-green" />
-                  </div>
+                <input name="phone" value={formData.phone} onChange={handleChange} placeholder="Phone Number *" required className="px-4 py-3 rounded-xl border border-black/10 outline-none focus:border-green" />
 
-                  <span className="text-sm text-gray-700">
-                    +254 713 428 383
-                  </span>
-                </a>
+                <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email (optional)" className="px-4 py-3 rounded-xl border border-black/10 outline-none focus:border-green" />
 
-                <a
-                  href="mailto:chepsuearts@gmail.com"
-                  className="flex items-center gap-4"
-                >
-                  <div className="w-10 h-10 rounded-xl bg-green/10 flex items-center justify-center">
-                    <Mail size={18} className="text-green" />
-                  </div>
+                <input name="location" value={formData.location} onChange={handleChange} placeholder="Delivery Location *" required className="px-4 py-3 rounded-xl border border-black/10 outline-none focus:border-green" />
 
-                  <span className="text-sm text-gray-700">
-                    chepsuearts@gmail.com
-                  </span>
-                </a>
+                <textarea name="message" value={formData.message} onChange={handleChange} rows="4" placeholder="Additional details..." className="md:col-span-2 px-4 py-3 rounded-xl border border-black/10 outline-none focus:border-green resize-none" />
 
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-green/10 flex items-center justify-center">
-                    <MapPin size={18} className="text-green" />
-                  </div>
+              </div>
 
-                  <span className="text-sm text-gray-700">
-                    Kenya
-                  </span>
+              <button type="submit" disabled={!orderItems.length} className="w-full mt-6 bg-black text-white py-4 rounded-xl font-semibold flex items-center justify-center gap-3 hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed transition">
+                <Send size={18} /> Submit Order Request
+              </button>
+            </form>
+
+          </div>
+
+          <aside className="space-y-6">
+
+            <div className="bg-black text-white rounded-3xl p-7">
+              <h2 className="text-xl font-bold">Order Summary</h2>
+
+              <div className="mt-6 space-y-3">
+                <div className="flex justify-between text-gray-300">
+                  <span>Items</span>
+                  <span>{orderItems.reduce((total, item) => total + item.quantity, 0)}</span>
                 </div>
 
+                <div className="border-t border-white/10 pt-3 flex justify-between font-semibold">
+                  <span>Total</span>
+                  <span>
+                    {orderItems.some((item) => item.price)
+                      ? `KSh ${orderItems.reduce((total, item) => total + (item.price || 0) * item.quantity, 0).toLocaleString()}`
+                      : "To confirm"}
+                  </span>
+                </div>
               </div>
             </div>
 
-            {/* WhatsApp */}
-            <a
-              href="https://wa.me/254713428383"
-              target="_blank"
-              rel="noreferrer"
-              className="flex items-center justify-center gap-3 bg-[#25D366] text-white rounded-2xl py-4 font-semibold"
-            >
-              <MessageCircle size={21} />
-              Chat on WhatsApp
-            </a>
+            <button onClick={orderOnWhatsApp} disabled={!orderItems.length} className="w-full flex items-center justify-center gap-3 bg-[#25D366] text-white rounded-2xl py-4 font-semibold hover:scale-[1.02] disabled:opacity-40 disabled:cursor-not-allowed transition">
+              <svg viewBox="0 0 32 32" className="w-6 h-6" aria-hidden="true">
+                <circle cx="16" cy="16" r="16" fill="white" />
+                <path fill="#25D366" d="M16 5.3A10.7 10.7 0 0 0 6.8 21.4L5.5 26.5l5.2-1.3A10.7 10.7 0 1 0 16 5.3Zm0 19.4c-1.7 0-3.3-.5-4.7-1.4l-.3-.2-3.1.8.8-3-.2-.3a8.7 8.7 0 1 1 7.5 4.1Zm4.8-6.5c-.3-.2-1.7-.8-2-.9-.3-.1-.5-.2-.7.2-.2.3-.7.9-.8 1.1-.2.2-.3.2-.6.1-1.6-.8-2.7-1.5-3.7-3.2-.3-.5.3-.5.8-1.7.1-.2 0-.4 0-.6 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.1 1.1-1.1 2.6s1.1 3 1.3 3.2c.2.2 2.2 3.4 5.4 4.7.8.3 1.4.5 1.9.6.8.3 1.5.2 2.1.1.7-.1 1.7-.7 2-1.4.2-.7.2-1.3.1-1.4-.1-.1-.3-.2-.6-.3Z" />
+              </svg>
+              Order on WhatsApp
+            </button>
+
+            <div className="bg-gray-50 border border-black/10 rounded-3xl p-7">
+              <h3 className="font-bold text-xl">Need Help?</h3>
+
+              <div className="space-y-4 mt-5">
+                <a href="tel:+254713428383" className="flex items-center gap-3 text-sm text-gray-600 hover:text-black">
+                  <Phone size={18} className="text-green" /> +254 713 428 383
+                </a>
+
+                <a href="mailto:chepsuearts@gmail.com" className="flex items-center gap-3 text-sm text-gray-600 hover:text-black">
+                  <Mail size={18} className="text-green" /> chepsuearts@gmail.com
+                </a>
+
+                <div className="flex items-center gap-3 text-sm text-gray-600">
+                  <MapPin size={18} className="text-green" /> Kenya
+                </div>
+              </div>
+            </div>
 
           </aside>
         </div>
