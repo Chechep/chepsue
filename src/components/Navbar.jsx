@@ -1,4 +1,4 @@
-import { Menu, X, ShoppingBag } from "lucide-react";
+import { Menu, X, ShoppingCart } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 import icon from "../assets/icon.png";
@@ -62,7 +62,7 @@ export default function Navbar() {
               }`
             }
           >
-            <ShoppingBag className="w-6 h-6 text-black" />
+            <ShoppingCart className="w-6 h-6 text-black" />
           </NavLink>
 
           <div ref={menuRef} className="relative md:hidden">

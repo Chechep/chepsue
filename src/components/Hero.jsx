@@ -24,7 +24,7 @@ export default function Hero() {
               className="text-6xl sm:text-7xl lg:text-8xl text-black leading-[0.9] tracking-[-0.03em] font-medium"
               style={{ fontFamily: "'Cormorant Garamond', serif" }}
             >
-              Art that tells
+              Handcrafted art that tells
               <span className="block italic text-green mt-3">
                 your story.
               </span>
@@ -40,7 +40,7 @@ export default function Hero() {
             </p>
 
             {/* FEATURES */}
-            <div className="grid grid-cols-3 gap-6 max-w-2xl mx-auto mt-12 pt-8 border-t border-black/10">
+            <div className="grid grid-cols-3 gap-6 max-w-2xl mx-auto mt-3 pt-8 border-t border-black/10">
 
               <div className="group flex flex-col items-center">
                 <Brush size={21} className="text-green transition-transform duration-300 group-hover:scale-110" />
@@ -65,7 +65,7 @@ export default function Hero() {
           </div>
 
           {/* HERO IMAGE */}
-          <div className="relative w-full max-w-4xl mx-auto mt-16">
+          <div className="relative w-full mx-auto mt-8">
 
             <div className="absolute -top-8 -right-8 w-28 h-28 border border-green/20 rounded-full" />
             <div className="absolute -bottom-8 -left-8 w-24 h-24 border border-black/10 rounded-full" />
