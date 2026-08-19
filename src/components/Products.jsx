@@ -33,7 +33,7 @@ export default function Products() {
       )}
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="grid sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 mt-10">
+        <div className="grid sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6 mt-10">
           {products.map((product) => (
             <article
               key={product.id}
