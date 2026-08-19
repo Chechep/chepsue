@@ -2,7 +2,7 @@ import {
   ArrowLeft,
   Check,
   ShoppingCart,
-  Zap,
+  Truck,
 } from "lucide-react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
@@ -136,10 +136,6 @@ export default function Product() {
                 className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
               />
 
-              <span className="absolute top-5 left-5 bg-white/90 backdrop-blur-md px-4 py-2 rounded-full text-sm font-medium text-black">
-                {product.category}
-              </span>
-
             </div>
           </div>
 
@@ -164,12 +160,12 @@ export default function Product() {
 
             {/* QUALITY BOX */}
             <div className="bg-gray-50 border border-black/10 rounded-2xl p-5">
-
-              <h3 className="font-semibold text-black">
+              <h3 className="font-light text-black"
+              >
                 Made with care
               </h3>
 
-              <p className="text-gray-500 text-sm leading-relaxed mt-2">
+              <p className="text-black text-sm font-thin leading-relaxed mt-2">
                 Each piece is handcrafted with attention to detail.
                 Every creation has its own unique character.
               </p>
@@ -181,7 +177,7 @@ export default function Product() {
 
               <button
                 onClick={addToOrder}
-                className="border border-black/10 text-black py-4 rounded-xl flex items-center justify-center gap-3 font-semibold hover:bg-black hover:text-white transition"
+                className="border border-black/30 text-black py-4 rounded-xl flex items-center justify-center gap-3 hover:bg-black hover:text-white transition"
               >
                 <ShoppingCart size={20} />
                 Add to Order
@@ -189,9 +185,9 @@ export default function Product() {
 
               <button
                 onClick={orderNow}
-                className="bg-black text-white py-4 rounded-xl flex items-center justify-center gap-3 font-semibold hover:bg-green transition"
+                className="bg-navy/75 text-white py-4 rounded-xl flex items-center justify-center gap-3 hover:bg-black transition"
               >
-                <Zap size={20} />
+                <Truck size={20} />
                 Order Now
               </button>
 

@@ -145,7 +145,7 @@ export default function Products() {
 
                       <button
                         onClick={() => addToOrder(product)}
-                        className="bg-black text-white py-3 rounded-xl flex items-center justify-center gap-2 text-sm font-semibold hover:bg-green transition"
+                        className="bg-navy/75 text-white py-3 rounded-xl flex items-center justify-center gap-2 text-sm font-semibold hover:bg-green transition"
                       >
                         <ShoppingCart size={17} />
                         Order

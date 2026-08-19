@@ -1,121 +1,198 @@
-import {
-  Phone,
-  Mail,
-  MapPin,
-  ArrowUpRight,
-} from "lucide-react";
+import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
+
+const whatsappNumber = "254713428383";
 
 export default function Contact() {
   const contactDetails = [
     {
       icon: Phone,
-      title: "Call Us",
+      title: "Phone",
+      label: "Speak with us",
       value: "+254 713 428 383",
       href: "tel:+254713428383",
     },
     {
       icon: Mail,
-      title: "Email Us",
+      title: "Email",
+      label: "Send us a message",
       value: "chepsuearts@gmail.com",
       href: "mailto:chepsuearts@gmail.com",
     },
     {
       icon: MapPin,
       title: "Location",
+      label: "Based in",
       value: "Kenya",
       href: "#",
     },
   ];
 
+  const openWhatsApp = () => {
+    const message = encodeURIComponent(
+      "Hello Chepsue Arts, I would like to start a conversation about your artwork."
+    );
+
+    window.open(
+      `https://wa.me/${whatsappNumber}?text=${message}`,
+      "_blank"
+    );
+  };
+
   return (
-    <section
-      id="contact"
-      className="py-24 lg:py-32 bg-white"
-    >
+    <section id="contact" className="min-h-screen bg-white py-24 lg:py-32">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
 
-        {/* Header */}
-        <div className="max-w-3xl mx-auto text-center">
+        {/* HEADER */}
+        <div className="grid lg:grid-cols-[1fr_420px] gap-12 lg:gap-24 items-end">
+          <div>
+            <h1
+              className="text-5xl sm:text-6xl lg:text-7xl font-semibold text-black mt-6 tracking-tight leading-[0.95]"
+              style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+              Let's create
+              <span className="block italic text-green mt-2">
+                something beautiful.
+              </span>
+            </h1>
+          </div>
 
-          <span className="inline-flex items-center px-4 py-2 rounded-full border border-black/10 bg-black/[0.02] text-sm font-medium text-gray-700">
-            Get In Touch
-          </span>
-
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-black mt-6 tracking-tight">
-            Let's create something
-            <span className="block text-green mt-2">
-              beautiful together.
-            </span>
-          </h2>
-
-          <p className="text-gray-600 text-lg leading-relaxed mt-6 max-w-2xl mx-auto">
-            Have a question, want to place an order, or have an idea
-            for a custom piece? We'd love to hear from you.
-          </p>
+          <div>
+            <p
+              className="text-gray-600 text-lg leading-8"
+              style={{ fontFamily: "'DM Sans', sans-serif" }}
+            >
+              Whether you're looking for a unique handmade piece,
+              placing an order, or bringing a custom idea to life,
+              we're here to help.
+            </p>
+          </div>
 
         </div>
 
-        {/* Contact Cards */}
-        <div className="grid md:grid-cols-3 gap-5 lg:gap-6 max-w-5xl mx-auto mt-16">
+        {/* CONTACT CARDS */}
+        <div className="grid grid-cols-3 gap-3 sm:gap-5 mt-20">
 
-          {contactDetails.map((item) => {
+          {contactDetails.map((item, index) => {
             const Icon = item.icon;
 
             return (
               <a
                 key={item.title}
                 href={item.href}
-                className="group p-7 rounded-3xl border border-black/10 bg-gray-50/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-green/20"
+                className="group relative overflow-hidden rounded-[24px] sm:rounded-[28px] border border-black/10 bg-white p-4 sm:p-7 lg:p-8 transition-all duration-300 hover:-translate-y-1 hover:border-black/20 hover:shadow-xl"
               >
-                <div className="flex items-start justify-between">
 
-                  <div className="w-12 h-12 rounded-2xl bg-green/10 flex items-center justify-center">
-                    <Icon
-                      size={22}
-                      className="text-green transition-transform duration-300 group-hover:scale-110"
-                    />
-                  </div>
+                {/* NUMBER */}
+                <span
+                  className="absolute top-4 right-4 sm:top-7 sm:right-8 text-[10px] sm:text-xs font-semibold text-gray-300"
+                  style={{ fontFamily: "'DM Sans', sans-serif" }}
+                >
+                  0{index + 1}
+                </span>
 
-                  <ArrowUpRight
+                {/* ICON */}
+                <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-black flex items-center justify-center transition-all duration-300 group-hover:bg-green">
+                  <Icon
                     size={18}
-                    className="text-gray-400 transition-all duration-300 group-hover:text-green group-hover:translate-x-1 group-hover:-translate-y-1"
+                    className="sm:w-[22px] sm:h-[22px] text-white"
                   />
+                </div>
+
+                <div className="mt-6 sm:mt-10">
+
+                  <p
+                    className="text-[9px] sm:text-xs uppercase tracking-[0.12em] sm:tracking-[0.15em] text-gray-400 font-semibold"
+                    style={{ fontFamily: "'DM Sans', sans-serif" }}
+                  >
+                    {item.label}
+                  </p>
+
+                  <h2
+                    className="text-lg sm:text-2xl font-semibold text-black mt-1 sm:mt-2"
+                    style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                  >
+                    {item.title}
+                  </h2>
+
+                  <p
+                    className="text-gray-600 text-[10px] sm:text-sm mt-2 sm:mt-3 break-words leading-relaxed"
+                    style={{ fontFamily: "'DM Sans', sans-serif" }}
+                  >
+                    {item.value}
+                  </p>
 
                 </div>
 
-                <h3 className="text-lg font-bold text-black mt-6">
-                  {item.title}
-                </h3>
+                {/* ARROW */}
+                <div className="absolute bottom-4 right-4 sm:bottom-7 sm:right-8 w-7 h-7 sm:w-10 sm:h-10 rounded-full border border-black/10 flex items-center justify-center transition-all duration-300 group-hover:bg-black group-hover:border-black">
+                  <ArrowUpRight
+                    size={14}
+                    className="sm:w-[17px] sm:h-[17px] text-black group-hover:text-white transition"
+                  />
+                </div>
 
-                <p className="text-gray-600 mt-2 break-words">
-                  {item.value}
-                </p>
               </a>
             );
           })}
 
         </div>
 
-        {/* Bottom CTA */}
-        <div className="max-w-5xl mx-auto mt-16 pt-8 border-t border-black/10 flex flex-col md:flex-row items-center justify-between gap-5">
+        {/* CTA */}
+        <div className="relative overflow-hidden mt-6 rounded-[28px] sm:rounded-[32px] bg-black text-white p-7 sm:p-10 lg:p-14">
 
-          <div>
-            <p className="text-black font-semibold">
-              Ready to bring your idea to life?
-            </p>
+          <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
 
-            <p className="text-gray-500 text-sm mt-1">
-              Reach out and let's talk about your next piece.
-            </p>
+            <div className="max-w-2xl">
+
+              <span
+                className="text-green text-xs sm:text-sm font-semibold uppercase tracking-[0.2em]"
+                style={{ fontFamily: "'DM Sans', sans-serif" }}
+              >
+                Custom Creations
+              </span>
+
+              <h2
+                className="text-3xl sm:text-4xl lg:text-5xl font-semibold mt-4 tracking-tight"
+                style={{ fontFamily: "'Cormorant Garamond', serif" }}
+              >
+                Have something
+                <span className="text-green italic"> specific </span>
+                in mind?
+              </h2>
+
+              <p
+                className="text-white/60 mt-4 leading-7 max-w-xl text-sm sm:text-base"
+                style={{ fontFamily: "'DM Sans', sans-serif" }}
+              >
+                Tell us what you're imagining and let's turn your
+                idea into a handmade piece created especially for you.
+              </p>
+
+            </div>
+
+            <button
+              onClick={openWhatsApp}
+              className="shrink-0 inline-flex items-center justify-center gap-3 bg-white text-black px-7 py-4 rounded-full font-semibold transition-all duration-300 hover:bg-green hover:text-white hover:scale-105"
+              style={{ fontFamily: "'DM Sans', sans-serif" }}
+            >
+              Start a Conversation
+              <ArrowUpRight size={18} />
+            </button>
+
           </div>
 
-          <a
-            href="mailto:chepsuearts@gmail.com"
-            className="bg-black text-white px-6 py-3.5 rounded-full font-medium transition-all duration-300 hover:bg-green hover:scale-105"
-          >
-            Start a Conversation
-          </a>
+          {/* DECORATIVE CIRCLES */}
+          <div className="absolute -right-20 -bottom-32 w-80 h-80 border border-white/10 rounded-full" />
+          <div className="absolute -right-8 -bottom-20 w-56 h-56 border border-green/20 rounded-full" />
 
+        </div>
+
+        {/* FOOTNOTE */}
+        <div
+          className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-8 text-sm text-gray-400"
+          style={{ fontFamily: "'DM Sans', sans-serif" }}
+        >
+          <p>Handmade with love · Kenya</p>
+          <p>We look forward to hearing from you.</p>
         </div>
 
       </div>

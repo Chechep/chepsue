@@ -25,20 +25,18 @@ export default function Footer() {
               />
 
               <div>
-                <h2 className="font-bold text-xl">
+                <h2 className="font-bold text-xl" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                   Chepsue Arts
                 </h2>
 
-                <p className="text-xs text-gray-800">
+                <p className="text-xs italic text-gray-800"style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                   Handmade With Love
                 </p>
               </div>
-
             </div>
 
-            <p className="text-gray-800 leading-relaxed mt-5 max-w-sm">
-              Unique handcrafted art and decor created with
-              creativity, care and passion.
+            <p className="text-gray-800 leading-relaxed mt-2 max-w-sm"style={{ fontFamily: "'Cormorant Garamond', sans-serif" }}>
+              Unique handcrafted art and decor created with creativity, care and passion.
             </p>
           </div>
 
@@ -46,16 +44,16 @@ export default function Footer() {
           {/* Get In Touch */}
           <div className="md:col-start-3 md:justify-self-end">
 
-            <h3 className="font-semibold text-black">
+            <h3 className="font-semibold text-black"style={{ fontFamily: "'Cormorant Garamond', serif" }}>
               Get In Touch
             </h3>
 
-            <div className="flex flex-col gap-4 mt-5">
+            <div className="flex font-extralight flex-col gap-1 mt-3">
 
               {/* Phone */}
               <a
                 href="tel:+254713428383"
-                className="flex items-center gap-3 text-gray-800 hover:text-gray-500 transition"
+                className="flex items-center gap-3 text-gray-800 hover:text-black transition"
               >
 
                 {/* Phone Icon */}
@@ -73,7 +71,7 @@ export default function Footer() {
               {/* Gmail */}
               <a
                 href="mailto:chepsuearts@gmail.com"
-                className="flex items-center gap-3 text-gray-800 hover:text-gray-500 transition"
+                className="flex items-center gap-3 text-gray-800 hover:text-black transition"
               >
 
                 {/* Google Gmail SVG */}
@@ -108,7 +106,7 @@ export default function Footer() {
               {/* Instagram */}
               <a
                 href="#contact"
-                className="flex items-center gap-3 text-gray-800 hover:text-gray-500 transition"
+                className="flex items-center gap-3 text-gray-800 hover:text-black transition"
               >
 
                 {/* Instagram SVG */}
