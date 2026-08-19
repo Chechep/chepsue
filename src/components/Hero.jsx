@@ -53,7 +53,7 @@ export default function Hero() {
             </p>
           </div>
 
-          <div className="relative w-screen overflow-hidden mt-12">
+          <div className="relative w-full overflow-hidden mt-6">
             <div className="absolute left-0 top-0 bottom-0 w-20 sm:w-15 lg:w-20 bg-gradient-to-r from-white via-white/80 to-transparent z-10 pointer-events-none" />
             <div className="absolute right-0 top-0 bottom-0 w-20 sm:w-15 lg:w-20 bg-gradient-to-l from-white via-white/80 to-transparent z-10 pointer-events-none" />
 

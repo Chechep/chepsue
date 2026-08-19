@@ -1,4 +1,10 @@
-import { ArrowLeft, Check, ShoppingCart, Sparkles } from "lucide-react";
+import {
+  ArrowLeft,
+  Check,
+  ShoppingCart,
+  Sparkles,
+  Zap,
+} from "lucide-react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import products from "../data/product";
@@ -11,20 +17,50 @@ export default function Product() {
   const product = products.find((item) => item.id === id);
 
   const addToOrder = () => {
-    const orders = JSON.parse(localStorage.getItem("chepsueOrders") || "[]");
-    const existing = orders.find((item) => item.id === product.id);
+    if (!product) return;
+
+    const orders = JSON.parse(
+      localStorage.getItem("chepsueOrders") || "[]"
+    );
+
+    const existing = orders.find(
+      (item) => item.id === product.id
+    );
 
     const updatedOrders = existing
       ? orders.map((item) =>
           item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
+            ? {
+                ...item,
+                quantity: (item.quantity || 1) + 1,
+              }
             : item
         )
-      : [...orders, { ...product, quantity: 1, size: "", color: "" }];
+      : [
+          ...orders,
+          {
+            ...product,
+            quantity: 1,
+            size: "",
+            color: "",
+          },
+        ];
 
-    localStorage.setItem("chepsueOrders", JSON.stringify(updatedOrders));
+    localStorage.setItem(
+      "chepsueOrders",
+      JSON.stringify(updatedOrders)
+    );
+
+    // Immediately update Navbar cart count
+    window.dispatchEvent(
+      new Event("chepsueOrdersUpdated")
+    );
+
     setToast(true);
-    setTimeout(() => setToast(false), 2000);
+
+    setTimeout(() => {
+      setToast(false);
+    }, 2000);
   };
 
   const orderNow = () => {
@@ -36,6 +72,7 @@ export default function Product() {
     return (
       <section className="min-h-screen bg-white flex items-center justify-center px-6">
         <div className="text-center">
+
           <h1 className="text-4xl font-bold text-black">
             Product Not Found
           </h1>
@@ -51,6 +88,7 @@ export default function Product() {
             <ArrowLeft size={17} />
             Back to Products
           </Link>
+
         </div>
       </section>
     );
@@ -58,14 +96,22 @@ export default function Product() {
 
   return (
     <section className="min-h-screen bg-white pt-32 pb-24">
+
+      {/* TOAST */}
       {toast && (
         <div className="fixed top-24 right-6 z-[60] flex items-center gap-3 bg-black text-white px-5 py-3 rounded-xl shadow-xl">
-          <Check size={18} className="text-green" />
+          <Check
+            size={18}
+            className="text-green"
+          />
+
           Added to order list
         </div>
       )}
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
+
+        {/* BACK */}
         <Link
           to="/products"
           className="inline-flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-black transition"
@@ -75,12 +121,16 @@ export default function Product() {
         </Link>
 
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center mt-10">
+
+          {/* PRODUCT IMAGE */}
           <div className="relative">
+
             <div className="absolute -top-5 -right-5 w-24 h-24 border border-green/20 rounded-full" />
 
             <div className="absolute -bottom-5 -left-5 w-20 h-20 border border-black/10 rounded-full" />
 
             <div className="relative h-[450px] sm:h-[550px] lg:h-[650px] rounded-[32px] overflow-hidden bg-gray-100">
+
               <img
                 src={product.image}
                 alt={product.name}
@@ -90,14 +140,12 @@ export default function Product() {
               <span className="absolute top-5 left-5 bg-white/90 backdrop-blur-md px-4 py-2 rounded-full text-sm font-medium text-black">
                 {product.category}
               </span>
+
             </div>
           </div>
 
+          {/* PRODUCT INFORMATION */}
           <div className="max-w-xl">
-            <div className="inline-flex items-center gap-2 text-green text-sm font-semibold">
-              <Sparkles size={16} />
-              Handmade by Chepsue Arts
-            </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-black mt-5 tracking-tight leading-tight">
               {product.name}
@@ -109,13 +157,15 @@ export default function Product() {
 
             {product.price && (
               <p className="text-2xl font-bold text-black mt-6">
-                KSh {product.price.toLocaleString()}
+                KSh. {product.price.toLocaleString()}
               </p>
             )}
 
             <div className="border-t border-black/10 my-8" />
 
+            {/* QUALITY BOX */}
             <div className="bg-gray-50 border border-black/10 rounded-2xl p-5">
+
               <h3 className="font-semibold text-black">
                 Made with care
               </h3>
@@ -124,9 +174,12 @@ export default function Product() {
                 Each piece is handcrafted with attention to detail.
                 Every creation has its own unique character.
               </p>
+
             </div>
 
+            {/* ORDER BUTTONS */}
             <div className="grid sm:grid-cols-2 gap-3 mt-8">
+
               <button
                 onClick={addToOrder}
                 className="border border-black/10 text-black py-4 rounded-xl flex items-center justify-center gap-3 font-semibold hover:bg-black hover:text-white transition"
@@ -139,9 +192,10 @@ export default function Product() {
                 onClick={orderNow}
                 className="bg-black text-white py-4 rounded-xl flex items-center justify-center gap-3 font-semibold hover:bg-green transition"
               >
-                <ShoppingCart size={20} />
+                <Zap size={20} />
                 Order Now
               </button>
+
             </div>
 
             <p className="text-center text-sm text-gray-500 mt-5">
@@ -153,6 +207,7 @@ export default function Product() {
                 Request a custom piece
               </Link>
             </p>
+
           </div>
         </div>
       </div>

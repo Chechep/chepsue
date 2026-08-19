@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Contact from "./pages/Contact";
 import Product from "./pages/Product";
 import Order from "./pages/Order";
+import Notifications from "./pages/Notifications";
 
 function App() {
   return (
@@ -46,6 +47,12 @@ function App() {
             <Route
               path="/order"
               element={<Order />}
+            />
+
+            {/* Notifications */}
+            <Route
+              path="/notifications"
+              element={<Notifications />}
             />
 
           </Routes>

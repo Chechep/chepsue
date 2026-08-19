@@ -27,20 +27,33 @@ export default function Order() {
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem("chepsueOrders") || "[]");
+    const saved = JSON.parse(
+      localStorage.getItem("chepsueOrders") || "[]"
+    );
+
     setOrderItems(saved);
   }, []);
 
   const updateItems = (items) => {
     setOrderItems(items);
-    localStorage.setItem("chepsueOrders", JSON.stringify(items));
+
+    localStorage.setItem(
+      "chepsueOrders",
+      JSON.stringify(items)
+    );
+
+    // Notify other components in the same tab
+    window.dispatchEvent(new Event("chepsueOrdersUpdated"));
   };
 
   const increaseQuantity = (id) => {
     updateItems(
       orderItems.map((item) =>
         item.id === id
-          ? { ...item, quantity: item.quantity + 1 }
+          ? {
+              ...item,
+              quantity: Number(item.quantity || 1) + 1,
+            }
           : item
       )
     );
@@ -50,27 +63,44 @@ export default function Order() {
     updateItems(
       orderItems.map((item) =>
         item.id === id
-          ? { ...item, quantity: Math.max(1, item.quantity - 1) }
+          ? {
+              ...item,
+              quantity: Math.max(
+                1,
+                Number(item.quantity || 1) - 1
+              ),
+            }
           : item
       )
     );
   };
 
   const removeItem = (id) => {
-    updateItems(orderItems.filter((item) => item.id !== id));
+    updateItems(
+      orderItems.filter((item) => item.id !== id)
+    );
   };
 
   const updateItem = (id, field, value) => {
     updateItems(
       orderItems.map((item) =>
-        item.id === id ? { ...item, [field]: value } : item
+        item.id === id
+          ? {
+              ...item,
+              [field]: value,
+            }
+          : item
       )
     );
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const createMessage = () => `
@@ -107,10 +137,16 @@ Please confirm availability, final price and delivery details.
 
   const orderOnWhatsApp = () => {
     if (!orderItems.length) {
-      return alert("Please add at least one product to your order.");
+      return alert(
+        "Please add at least one product to your order."
+      );
     }
 
-    if (!formData.name || !formData.phone || !formData.location) {
+    if (
+      !formData.name ||
+      !formData.phone ||
+      !formData.location
+    ) {
       return alert(
         "Please complete your name, phone number and delivery location."
       );
@@ -130,7 +166,9 @@ Please confirm availability, final price and delivery details.
     e.preventDefault();
 
     if (!orderItems.length) {
-      return alert("Please add at least one product to your order.");
+      return alert(
+        "Please add at least one product to your order."
+      );
     }
 
     const savedOrders = JSON.parse(
@@ -146,30 +184,56 @@ Please confirm availability, final price and delivery details.
 
     localStorage.setItem(
       "chepsueOrderHistory",
-      JSON.stringify([newOrder, ...savedOrders])
+      JSON.stringify([
+        newOrder,
+        ...savedOrders,
+      ])
     );
 
     setSubmitted(true);
   };
 
+  const totalItems = orderItems.reduce(
+    (total, item) =>
+      total + Number(item.quantity || 1),
+    0
+  );
+
+  const totalPrice = orderItems.reduce(
+    (total, item) =>
+      total +
+      Number(item.price || 0) *
+        Number(item.quantity || 1),
+    0
+  );
+
   if (submitted) {
     return (
       <main className="min-h-screen bg-white pt-32 pb-20 flex items-center justify-center px-6">
-        <div className="max-w-lg w-full bg-white border border-black/10 rounded-3xl p-10 text-center shadow-xl">
+
+        <div className="max-w-lg w-full bg-white border border-black/10 rounded-[32px] p-10 text-center shadow-xl">
+
           <div className="w-20 h-20 bg-green/10 rounded-full flex items-center justify-center mx-auto">
             <CheckCircle2 className="w-10 h-10 text-green" />
           </div>
 
-          <h1 className="text-3xl font-bold text-black mt-6">
+          <h1
+            className="text-4xl text-black mt-6 font-semibold"
+            style={{
+              fontFamily: "'Cormorant Garamond', serif",
+            }}
+          >
             Order Ready!
           </h1>
 
-          <p className="text-gray-600 mt-4">
-            Your order details have been prepared. We'll confirm availability,
-            pricing and delivery details with you.
+          <p className="text-gray-600 mt-4 leading-7">
+            Your order details have been prepared.
+            We'll confirm availability, pricing and
+            delivery details with you.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 mt-8">
+
             <Link
               to="/products"
               className="flex-1 flex items-center justify-center gap-2 bg-black text-white px-6 py-3 rounded-xl hover:bg-gray-800 transition"
@@ -184,7 +248,9 @@ Please confirm availability, final price and delivery details.
             >
               Back to Order
             </button>
+
           </div>
+
         </div>
       </main>
     );
@@ -192,7 +258,10 @@ Please confirm availability, final price and delivery details.
 
   return (
     <main className="min-h-screen bg-white pt-32 pb-24">
+
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
+
+        {/* BACK */}
         <Link
           to="/products"
           className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-black transition"
@@ -201,32 +270,72 @@ Please confirm availability, final price and delivery details.
           Back to Products
         </Link>
 
+        {/* HEADER */}
         <div className="mt-8">
+
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-black/10 bg-gray-50 text-sm font-medium">
             <Package size={16} />
             Your Order
           </span>
 
-          <h1 className="text-4xl md:text-5xl font-bold text-black mt-5">
-            Complete Your Order
+          <h1
+            className="text-5xl md:text-6xl text-black mt-5 font-medium leading-[0.95]"
+            style={{
+              fontFamily: "'Cormorant Garamond', serif",
+            }}
+          >
+            Complete Your
+            <span className="block italic text-green mt-2">
+              Order.
+            </span>
           </h1>
 
-          <p className="text-gray-600 mt-3 max-w-2xl">
-            Review your pieces, choose your options and send your order to
-            Chepsue Arts.
+          <p className="text-gray-600 mt-5 max-w-2xl leading-7">
+            Review your pieces, choose your options and
+            send your order to Chepsue Arts.
           </p>
+
         </div>
 
+        {/* CONTENT */}
         <div className="grid lg:grid-cols-[1fr_380px] gap-8 mt-12">
+
+          {/* LEFT */}
           <div className="space-y-6">
-            <section className="bg-white border border-black/10 rounded-3xl p-6 md:p-8">
-              <h2 className="text-xl font-bold text-black">
-                Your Order List
-              </h2>
+
+            {/* ORDER LIST */}
+            <section className="bg-white border border-black/10 rounded-[28px] p-6 md:p-8">
+
+              <div className="flex items-center justify-between">
+
+                <h2
+                  className="text-2xl text-black font-semibold"
+                  style={{
+                    fontFamily:
+                      "'Cormorant Garamond', serif",
+                  }}
+                >
+                  Your Order List
+                </h2>
+
+                {totalItems > 0 && (
+                  <span className="text-sm text-gray-500">
+                    {totalItems}{" "}
+                    {totalItems === 1
+                      ? "item"
+                      : "items"}
+                  </span>
+                )}
+
+              </div>
 
               {!orderItems.length ? (
                 <div className="text-center py-16">
-                  <Package className="mx-auto text-gray-300" size={45} />
+
+                  <Package
+                    className="mx-auto text-gray-300"
+                    size={45}
+                  />
 
                   <h3 className="font-semibold text-black mt-5">
                     Your order list is empty
@@ -241,26 +350,37 @@ Please confirm availability, final price and delivery details.
                     className="inline-flex items-center gap-2 mt-6 bg-black text-white px-6 py-3 rounded-xl hover:bg-gray-800 transition"
                   >
                     Browse Products
-                    <ArrowLeft size={16} className="rotate-180" />
+                    <ArrowLeft
+                      size={16}
+                      className="rotate-180"
+                    />
                   </Link>
+
                 </div>
               ) : (
-                <div className="space-y-6 mt-6">
+                <div className="space-y-5 mt-6">
+
                   {orderItems.map((item) => (
                     <article
                       key={item.id}
-                      className="border border-black/10 rounded-2xl p-4"
+                      className="border border-black/10 rounded-2xl p-4 hover:border-black/20 transition"
                     >
+
                       <div className="flex gap-4">
+
+                        {/* IMAGE */}
                         <img
                           src={item.image}
                           alt={item.name}
-                          className="w-24 h-24 sm:w-32 sm:h-32 object-cover rounded-xl"
+                          className="w-24 h-24 sm:w-32 sm:h-32 object-cover rounded-xl shrink-0"
                         />
 
-                        <div className="flex-1">
+                        <div className="flex-1 min-w-0">
+
                           <div className="flex justify-between gap-3">
+
                             <div>
+
                               <h3 className="font-bold text-black">
                                 {item.name}
                               </h3>
@@ -268,24 +388,30 @@ Please confirm availability, final price and delivery details.
                               <p className="text-sm text-gray-500 mt-1">
                                 {item.category}
                               </p>
+
                             </div>
 
                             <button
-                              onClick={() => removeItem(item.id)}
+                              onClick={() =>
+                                removeItem(item.id)
+                              }
                               aria-label="Remove product"
-                              className="text-gray-400 hover:text-red-500 transition"
+                              className="text-gray-400 hover:text-red-500 transition shrink-0"
                             >
                               <Trash2 size={18} />
                             </button>
+
                           </div>
 
                           {item.price && (
                             <p className="font-semibold mt-3">
-                              KSh {item.price.toLocaleString()}
+                              KSh{" "}
+                              {item.price.toLocaleString()}
                             </p>
                           )}
 
                           <div className="grid sm:grid-cols-3 gap-3 mt-4">
+
                             <input
                               value={item.size || ""}
                               onChange={(e) =>
@@ -313,9 +439,12 @@ Please confirm availability, final price and delivery details.
                             />
 
                             <div className="flex items-center justify-between border border-black/10 rounded-lg px-2">
+
                               <button
                                 onClick={() =>
-                                  decreaseQuantity(item.id)
+                                  decreaseQuantity(
+                                    item.id
+                                  )
                                 }
                                 className="p-2 hover:bg-gray-100 rounded-lg"
                               >
@@ -328,31 +457,49 @@ Please confirm availability, final price and delivery details.
 
                               <button
                                 onClick={() =>
-                                  increaseQuantity(item.id)
+                                  increaseQuantity(
+                                    item.id
+                                  )
                                 }
                                 className="p-2 hover:bg-gray-100 rounded-lg"
                               >
                                 <Plus size={16} />
                               </button>
+
                             </div>
+
                           </div>
+
                         </div>
+
                       </div>
+
                     </article>
                   ))}
+
                 </div>
               )}
+
             </section>
 
+            {/* CUSTOMER DETAILS */}
             <form
               onSubmit={submitOrder}
-              className="bg-white border border-black/10 rounded-3xl p-6 md:p-8"
+              className="bg-white border border-black/10 rounded-[28px] p-6 md:p-8"
             >
-              <h2 className="text-xl font-bold text-black">
+
+              <h2
+                className="text-2xl text-black font-semibold"
+                style={{
+                  fontFamily:
+                    "'Cormorant Garamond', serif",
+                }}
+              >
                 Customer Details
               </h2>
 
               <div className="grid md:grid-cols-2 gap-5 mt-6">
+
                 <input
                   name="name"
                   value={formData.name}
@@ -397,6 +544,7 @@ Please confirm availability, final price and delivery details.
                   placeholder="Additional details..."
                   className="md:col-span-2 px-4 py-3 rounded-xl border border-black/10 outline-none focus:border-green resize-none"
                 />
+
               </div>
 
               <button
@@ -407,14 +555,16 @@ Please confirm availability, final price and delivery details.
                 <Send size={18} />
                 Submit Order Request
               </button>
-            </form>
-          </div>
 
-          <button
+            </form>
+
+            {/* WHATSAPP */}
+            <button
               onClick={orderOnWhatsApp}
               disabled={!orderItems.length}
-              className=" flex items-center justify-center gap-3 bg-black/10 text-black rounded-2xl py-4 font-semibold hover:scale-[1.02] disabled:opacity-40 disabled:cursor-not-allowed transition"
+              className="w-full flex items-center justify-center gap-3 bg-black/5 border border-black/10 text-black rounded-2xl py-4 font-semibold hover:bg-black/10 disabled:opacity-40 disabled:cursor-not-allowed transition"
             >
+
               <svg
                 viewBox="0 0 32 32"
                 className="w-6 h-6"
@@ -427,52 +577,75 @@ Please confirm availability, final price and delivery details.
               </svg>
 
               Order on WhatsApp
+
             </button>
 
+          </div>
+
+          {/* RIGHT SIDEBAR */}
           <aside className="space-y-6">
-            <div className="bg-black text-white rounded-3xl p-7">
-              <h2 className="text-xl font-bold">Order Summary</h2>
+
+            {/* SUMMARY */}
+            <div className="bg-black text-white rounded-[28px] p-7">
+
+              <h2
+                className="text-2xl font-semibold"
+                style={{
+                  fontFamily:
+                    "'Cormorant Garamond', serif",
+                }}
+              >
+                Order Summary
+              </h2>
 
               <div className="mt-6 space-y-3">
+
                 <div className="flex justify-between text-gray-300">
                   <span>Items</span>
-
-                  <span>
-                    {orderItems.reduce(
-                      (total, item) => total + item.quantity,
-                      0
-                    )}
-                  </span>
+                  <span>{totalItems}</span>
                 </div>
 
                 <div className="border-t border-white/10 pt-3 flex justify-between font-semibold">
+
                   <span>Total</span>
 
                   <span>
-                    {orderItems.some((item) => item.price)
-                      ? `KSh ${orderItems
-                          .reduce(
-                            (total, item) =>
-                              total +
-                              (item.price || 0) * item.quantity,
-                            0
-                          )
-                          .toLocaleString()}`
+                    {orderItems.some(
+                      (item) => item.price
+                    )
+                      ? `KSh ${totalPrice.toLocaleString()}`
                       : "To confirm"}
                   </span>
+
                 </div>
+
               </div>
+
             </div>
 
-            <div className="bg-gray-50 border border-black/10 rounded-3xl p-7">
-              <h3 className="font-bold text-xl">Need Help?</h3>
+            {/* HELP */}
+            <div className="bg-gray-50 border border-black/10 rounded-[28px] p-7">
+
+              <h3
+                className="text-2xl text-black font-semibold"
+                style={{
+                  fontFamily:
+                    "'Cormorant Garamond', serif",
+                }}
+              >
+                Need Help?
+              </h3>
 
               <div className="space-y-4 mt-5">
+
                 <a
                   href="tel:+254713428383"
                   className="flex items-center gap-3 text-sm text-gray-600 hover:text-black"
                 >
-                  <Phone size={18} className="text-green" />
+                  <Phone
+                    size={18}
+                    className="text-green"
+                  />
                   +254 713 428 383
                 </a>
 
@@ -480,19 +653,31 @@ Please confirm availability, final price and delivery details.
                   href="mailto:chepsuearts@gmail.com"
                   className="flex items-center gap-3 text-sm text-gray-600 hover:text-black"
                 >
-                  <Mail size={18} className="text-green" />
+                  <Mail
+                    size={18}
+                    className="text-green"
+                  />
                   chepsuearts@gmail.com
                 </a>
 
                 <div className="flex items-center gap-3 text-sm text-gray-600">
-                  <MapPin size={18} className="text-green" />
+                  <MapPin
+                    size={18}
+                    className="text-green"
+                  />
                   Kenya
                 </div>
+
               </div>
+
             </div>
+
           </aside>
+
         </div>
+
       </div>
+
     </main>
   );
 }
