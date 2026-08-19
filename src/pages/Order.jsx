@@ -1,31 +1,59 @@
 import { useEffect, useState } from "react";
-import { ArrowLeft, CheckCircle2, Mail, MapPin, Package, Phone, Send, Trash2, Plus, Minus } from "lucide-react";
+import {
+  ArrowLeft,
+  CheckCircle2,
+  Mail,
+  MapPin,
+  Package,
+  Phone,
+  Send,
+  Trash2,
+  Plus,
+  Minus,
+} from "lucide-react";
 import { Link } from "react-router-dom";
-import products from "../data/product";
 
 const whatsappNumber = "254713428383";
 
 export default function Order() {
   const [orderItems, setOrderItems] = useState([]);
-  const [formData, setFormData] = useState({ name: "", phone: "", email: "", location: "", message: "" });
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    location: "",
+    message: "",
+  });
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem("chepsueOrderList") || "[]");
+    const saved = JSON.parse(localStorage.getItem("chepsueOrders") || "[]");
     setOrderItems(saved);
   }, []);
 
   const updateItems = (items) => {
     setOrderItems(items);
-    localStorage.setItem("chepsueOrderList", JSON.stringify(items));
+    localStorage.setItem("chepsueOrders", JSON.stringify(items));
   };
 
   const increaseQuantity = (id) => {
-    updateItems(orderItems.map((item) => item.id === id ? { ...item, quantity: item.quantity + 1 } : item));
+    updateItems(
+      orderItems.map((item) =>
+        item.id === id
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      )
+    );
   };
 
   const decreaseQuantity = (id) => {
-    updateItems(orderItems.map((item) => item.id === id ? { ...item, quantity: Math.max(1, item.quantity - 1) } : item));
+    updateItems(
+      orderItems.map((item) =>
+        item.id === id
+          ? { ...item, quantity: Math.max(1, item.quantity - 1) }
+          : item
+      )
+    );
   };
 
   const removeItem = (id) => {
@@ -33,7 +61,11 @@ export default function Order() {
   };
 
   const updateItem = (id, field, value) => {
-    updateItems(orderItems.map((item) => item.id === id ? { ...item, [field]: value } : item));
+    updateItems(
+      orderItems.map((item) =>
+        item.id === id ? { ...item, [field]: value } : item
+      )
+    );
   };
 
   const handleChange = (e) => {
@@ -51,13 +83,21 @@ Email: ${formData.email || "Not provided"}
 Location: ${formData.location}
 
 ORDER
-${orderItems.map((item, index) => `
+${orderItems
+  .map(
+    (item, index) => `
 ${index + 1}. ${item.name}
 Quantity: ${item.quantity}
 Size: ${item.size || "Not specified"}
 Color: ${item.color || "Not specified"}
-Price: ${item.price ? `KSh ${item.price.toLocaleString()}` : "Price to confirm"}
-`).join("\n")}
+Price: ${
+      item.price
+        ? `KSh ${item.price.toLocaleString()}`
+        : "Price to confirm"
+    }
+`
+  )
+  .join("\n")}
 
 ADDITIONAL DETAILS
 ${formData.message || "None"}
@@ -66,27 +106,49 @@ Please confirm availability, final price and delivery details.
 `;
 
   const orderOnWhatsApp = () => {
-    if (!orderItems.length) return alert("Please add at least one product to your order.");
-    if (!formData.name || !formData.phone || !formData.location) return alert("Please complete your name, phone number and delivery location.");
+    if (!orderItems.length) {
+      return alert("Please add at least one product to your order.");
+    }
 
-    window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(createMessage())}`, "_blank");
+    if (!formData.name || !formData.phone || !formData.location) {
+      return alert(
+        "Please complete your name, phone number and delivery location."
+      );
+    }
+
+    window.open(
+      `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+        createMessage()
+      )}`,
+      "_blank"
+    );
+
     setSubmitted(true);
   };
 
   const submitOrder = (e) => {
     e.preventDefault();
-    if (!orderItems.length) return alert("Please add at least one product to your order.");
 
-    const savedOrders = JSON.parse(localStorage.getItem("chepsueOrderHistory") || "[]");
+    if (!orderItems.length) {
+      return alert("Please add at least one product to your order.");
+    }
+
+    const savedOrders = JSON.parse(
+      localStorage.getItem("chepsueOrderHistory") || "[]"
+    );
 
     const newOrder = {
       id: Date.now(),
       date: new Date().toLocaleString(),
       customer: formData,
-      items: orderItems
+      items: orderItems,
     };
 
-    localStorage.setItem("chepsueOrderHistory", JSON.stringify([newOrder, ...savedOrders]));
+    localStorage.setItem(
+      "chepsueOrderHistory",
+      JSON.stringify([newOrder, ...savedOrders])
+    );
+
     setSubmitted(true);
   };
 
@@ -98,7 +160,9 @@ Please confirm availability, final price and delivery details.
             <CheckCircle2 className="w-10 h-10 text-green" />
           </div>
 
-          <h1 className="text-3xl font-bold text-black mt-6">Order Ready!</h1>
+          <h1 className="text-3xl font-bold text-black mt-6">
+            Order Ready!
+          </h1>
 
           <p className="text-gray-600 mt-4">
             Your order details have been prepared. We'll confirm availability,
@@ -106,11 +170,18 @@ Please confirm availability, final price and delivery details.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 mt-8">
-            <Link to="/products" className="flex-1 flex items-center justify-center gap-2 bg-black text-white px-6 py-3 rounded-xl hover:bg-gray-800 transition">
-              <ArrowLeft size={17} /> Products
+            <Link
+              to="/products"
+              className="flex-1 flex items-center justify-center gap-2 bg-black text-white px-6 py-3 rounded-xl hover:bg-gray-800 transition"
+            >
+              <ArrowLeft size={17} />
+              Products
             </Link>
 
-            <button onClick={() => setSubmitted(false)} className="flex-1 border border-black/10 px-6 py-3 rounded-xl hover:bg-gray-50 transition">
+            <button
+              onClick={() => setSubmitted(false)}
+              className="flex-1 border border-black/10 px-6 py-3 rounded-xl hover:bg-gray-50 transition"
+            >
               Back to Order
             </button>
           </div>
@@ -122,74 +193,145 @@ Please confirm availability, final price and delivery details.
   return (
     <main className="min-h-screen bg-white pt-32 pb-24">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-
-        <Link to="/products" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-black transition">
-          <ArrowLeft size={17} /> Back to Products
+        <Link
+          to="/products"
+          className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-black transition"
+        >
+          <ArrowLeft size={17} />
+          Back to Products
         </Link>
 
         <div className="mt-8">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-black/10 bg-gray-50 text-sm font-medium">
-            <Package size={16} /> Your Order
+            <Package size={16} />
+            Your Order
           </span>
 
-          <h1 className="text-4xl md:text-5xl font-bold text-black mt-5">Complete Your Order</h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-black mt-5">
+            Complete Your Order
+          </h1>
 
           <p className="text-gray-600 mt-3 max-w-2xl">
-            Review your pieces, choose your options and send your order to Chepsue Arts.
+            Review your pieces, choose your options and send your order to
+            Chepsue Arts.
           </p>
         </div>
 
         <div className="grid lg:grid-cols-[1fr_380px] gap-8 mt-12">
-
           <div className="space-y-6">
-
             <section className="bg-white border border-black/10 rounded-3xl p-6 md:p-8">
-              <h2 className="text-xl font-bold text-black">Your Order List</h2>
+              <h2 className="text-xl font-bold text-black">
+                Your Order List
+              </h2>
 
               {!orderItems.length ? (
                 <div className="text-center py-16">
                   <Package className="mx-auto text-gray-300" size={45} />
-                  <h3 className="font-semibold text-black mt-5">Your order list is empty</h3>
-                  <p className="text-gray-500 text-sm mt-2">Add products from our collection.</p>
 
-                  <Link to="/products" className="inline-flex items-center gap-2 mt-6 bg-black text-white px-6 py-3 rounded-xl hover:bg-gray-800 transition">
-                    Browse Products <ArrowLeft size={16} className="rotate-180" />
+                  <h3 className="font-semibold text-black mt-5">
+                    Your order list is empty
+                  </h3>
+
+                  <p className="text-gray-500 text-sm mt-2">
+                    Add products from our collection.
+                  </p>
+
+                  <Link
+                    to="/products"
+                    className="inline-flex items-center gap-2 mt-6 bg-black text-white px-6 py-3 rounded-xl hover:bg-gray-800 transition"
+                  >
+                    Browse Products
+                    <ArrowLeft size={16} className="rotate-180" />
                   </Link>
                 </div>
               ) : (
                 <div className="space-y-6 mt-6">
                   {orderItems.map((item) => (
-                    <article key={item.id} className="border border-black/10 rounded-2xl p-4">
+                    <article
+                      key={item.id}
+                      className="border border-black/10 rounded-2xl p-4"
+                    >
                       <div className="flex gap-4">
-                        <img src={item.image} alt={item.name} className="w-24 h-24 sm:w-32 sm:h-32 object-cover rounded-xl" />
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className="w-24 h-24 sm:w-32 sm:h-32 object-cover rounded-xl"
+                        />
 
                         <div className="flex-1">
                           <div className="flex justify-between gap-3">
                             <div>
-                              <h3 className="font-bold text-black">{item.name}</h3>
-                              <p className="text-sm text-gray-500 mt-1">{item.category}</p>
+                              <h3 className="font-bold text-black">
+                                {item.name}
+                              </h3>
+
+                              <p className="text-sm text-gray-500 mt-1">
+                                {item.category}
+                              </p>
                             </div>
 
-                            <button onClick={() => removeItem(item.id)} aria-label="Remove product" className="text-gray-400 hover:text-red-500 transition">
+                            <button
+                              onClick={() => removeItem(item.id)}
+                              aria-label="Remove product"
+                              className="text-gray-400 hover:text-red-500 transition"
+                            >
                               <Trash2 size={18} />
                             </button>
                           </div>
 
-                          {item.price && <p className="font-semibold mt-3">KSh {item.price.toLocaleString()}</p>}
+                          {item.price && (
+                            <p className="font-semibold mt-3">
+                              KSh {item.price.toLocaleString()}
+                            </p>
+                          )}
 
                           <div className="grid sm:grid-cols-3 gap-3 mt-4">
-                            <input value={item.size || ""} onChange={(e) => updateItem(item.id, "size", e.target.value)} placeholder="Size" className="w-full px-3 py-2 rounded-lg border border-black/10 outline-none focus:border-green" />
+                            <input
+                              value={item.size || ""}
+                              onChange={(e) =>
+                                updateItem(
+                                  item.id,
+                                  "size",
+                                  e.target.value
+                                )
+                              }
+                              placeholder="Size"
+                              className="w-full px-3 py-2 rounded-lg border border-black/10 outline-none focus:border-green"
+                            />
 
-                            <input value={item.color || ""} onChange={(e) => updateItem(item.id, "color", e.target.value)} placeholder="Color" className="w-full px-3 py-2 rounded-lg border border-black/10 outline-none focus:border-green" />
+                            <input
+                              value={item.color || ""}
+                              onChange={(e) =>
+                                updateItem(
+                                  item.id,
+                                  "color",
+                                  e.target.value
+                                )
+                              }
+                              placeholder="Color"
+                              className="w-full px-3 py-2 rounded-lg border border-black/10 outline-none focus:border-green"
+                            />
 
                             <div className="flex items-center justify-between border border-black/10 rounded-lg px-2">
-                              <button onClick={() => decreaseQuantity(item.id)} className="p-2 hover:bg-gray-100 rounded-lg">
+                              <button
+                                onClick={() =>
+                                  decreaseQuantity(item.id)
+                                }
+                                className="p-2 hover:bg-gray-100 rounded-lg"
+                              >
                                 <Minus size={16} />
                               </button>
 
-                              <span className="font-semibold">{item.quantity}</span>
+                              <span className="font-semibold">
+                                {item.quantity}
+                              </span>
 
-                              <button onClick={() => increaseQuantity(item.id)} className="p-2 hover:bg-gray-100 rounded-lg">
+                              <button
+                                onClick={() =>
+                                  increaseQuantity(item.id)
+                                }
+                                className="p-2 hover:bg-gray-100 rounded-lg"
+                              >
                                 <Plus size={16} />
                               </button>
                             </div>
@@ -202,78 +344,152 @@ Please confirm availability, final price and delivery details.
               )}
             </section>
 
-            <form onSubmit={submitOrder} className="bg-white border border-black/10 rounded-3xl p-6 md:p-8">
-              <h2 className="text-xl font-bold text-black">Customer Details</h2>
+            <form
+              onSubmit={submitOrder}
+              className="bg-white border border-black/10 rounded-3xl p-6 md:p-8"
+            >
+              <h2 className="text-xl font-bold text-black">
+                Customer Details
+              </h2>
 
               <div className="grid md:grid-cols-2 gap-5 mt-6">
+                <input
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="Full Name *"
+                  required
+                  className="px-4 py-3 rounded-xl border border-black/10 outline-none focus:border-green"
+                />
 
-                <input name="name" value={formData.name} onChange={handleChange} placeholder="Full Name *" required className="px-4 py-3 rounded-xl border border-black/10 outline-none focus:border-green" />
+                <input
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  placeholder="Phone Number *"
+                  required
+                  className="px-4 py-3 rounded-xl border border-black/10 outline-none focus:border-green"
+                />
 
-                <input name="phone" value={formData.phone} onChange={handleChange} placeholder="Phone Number *" required className="px-4 py-3 rounded-xl border border-black/10 outline-none focus:border-green" />
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="Email (optional)"
+                  className="px-4 py-3 rounded-xl border border-black/10 outline-none focus:border-green"
+                />
 
-                <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email (optional)" className="px-4 py-3 rounded-xl border border-black/10 outline-none focus:border-green" />
+                <input
+                  name="location"
+                  value={formData.location}
+                  onChange={handleChange}
+                  placeholder="Delivery Location *"
+                  required
+                  className="px-4 py-3 rounded-xl border border-black/10 outline-none focus:border-green"
+                />
 
-                <input name="location" value={formData.location} onChange={handleChange} placeholder="Delivery Location *" required className="px-4 py-3 rounded-xl border border-black/10 outline-none focus:border-green" />
-
-                <textarea name="message" value={formData.message} onChange={handleChange} rows="4" placeholder="Additional details..." className="md:col-span-2 px-4 py-3 rounded-xl border border-black/10 outline-none focus:border-green resize-none" />
-
+                <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  rows="4"
+                  placeholder="Additional details..."
+                  className="md:col-span-2 px-4 py-3 rounded-xl border border-black/10 outline-none focus:border-green resize-none"
+                />
               </div>
 
-              <button type="submit" disabled={!orderItems.length} className="w-full mt-6 bg-black text-white py-4 rounded-xl font-semibold flex items-center justify-center gap-3 hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed transition">
-                <Send size={18} /> Submit Order Request
+              <button
+                type="submit"
+                disabled={!orderItems.length}
+                className="w-full mt-6 bg-black text-white py-4 rounded-xl font-semibold flex items-center justify-center gap-3 hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed transition"
+              >
+                <Send size={18} />
+                Submit Order Request
               </button>
             </form>
-
           </div>
 
-          <aside className="space-y-6">
+          <button
+              onClick={orderOnWhatsApp}
+              disabled={!orderItems.length}
+              className=" flex items-center justify-center gap-3 bg-black/10 text-black rounded-2xl py-4 font-semibold hover:scale-[1.02] disabled:opacity-40 disabled:cursor-not-allowed transition"
+            >
+              <svg
+                viewBox="0 0 32 32"
+                className="w-6 h-6"
+                aria-hidden="true"
+              >
+                <path
+                  fill="#25D366"
+                  d="M16 5.3A10.7 10.7 0 0 0 6.8 21.4L5.5 26.5l5.2-1.3A10.7 10.7 0 1 0 16 5.3Zm0 19.4c-1.7 0-3.3-.5-4.7-1.4l-.3-.2-3.1.8.8-3-.2-.3a8.7 8.7 0 1 1 7.5 4.1Zm4.8-6.5c-.3-.2-1.7-.8-2-.9-.3-.1-.5-.2-.7.2-.2.3-.7.9-.8 1.1-.2.2-.3.2-.6.1-1.6-.8-2.7-1.5-3.7-3.2-.3-.5.3-.5.8-1.7.1-.2 0-.4 0-.6 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.1 1.1-1.1 2.6s1.1 3 1.3 3.2c.2.2 2.2 3.4 5.4 4.7.8.3 1.4.5 1.9.6.8.3 1.5.2 2.1.1.7-.1 1.7-.7 2-1.4.2-.7.2-1.3.1-1.4-.1-.1-.3-.2-.6-.3Z"
+                />
+              </svg>
 
+              Order on WhatsApp
+            </button>
+
+          <aside className="space-y-6">
             <div className="bg-black text-white rounded-3xl p-7">
               <h2 className="text-xl font-bold">Order Summary</h2>
 
               <div className="mt-6 space-y-3">
                 <div className="flex justify-between text-gray-300">
                   <span>Items</span>
-                  <span>{orderItems.reduce((total, item) => total + item.quantity, 0)}</span>
+
+                  <span>
+                    {orderItems.reduce(
+                      (total, item) => total + item.quantity,
+                      0
+                    )}
+                  </span>
                 </div>
 
                 <div className="border-t border-white/10 pt-3 flex justify-between font-semibold">
                   <span>Total</span>
+
                   <span>
                     {orderItems.some((item) => item.price)
-                      ? `KSh ${orderItems.reduce((total, item) => total + (item.price || 0) * item.quantity, 0).toLocaleString()}`
+                      ? `KSh ${orderItems
+                          .reduce(
+                            (total, item) =>
+                              total +
+                              (item.price || 0) * item.quantity,
+                            0
+                          )
+                          .toLocaleString()}`
                       : "To confirm"}
                   </span>
                 </div>
               </div>
             </div>
 
-            <button onClick={orderOnWhatsApp} disabled={!orderItems.length} className="w-full flex items-center justify-center gap-3 bg-[#25D366] text-white rounded-2xl py-4 font-semibold hover:scale-[1.02] disabled:opacity-40 disabled:cursor-not-allowed transition">
-              <svg viewBox="0 0 32 32" className="w-6 h-6" aria-hidden="true">
-                <circle cx="16" cy="16" r="16" fill="white" />
-                <path fill="#25D366" d="M16 5.3A10.7 10.7 0 0 0 6.8 21.4L5.5 26.5l5.2-1.3A10.7 10.7 0 1 0 16 5.3Zm0 19.4c-1.7 0-3.3-.5-4.7-1.4l-.3-.2-3.1.8.8-3-.2-.3a8.7 8.7 0 1 1 7.5 4.1Zm4.8-6.5c-.3-.2-1.7-.8-2-.9-.3-.1-.5-.2-.7.2-.2.3-.7.9-.8 1.1-.2.2-.3.2-.6.1-1.6-.8-2.7-1.5-3.7-3.2-.3-.5.3-.5.8-1.7.1-.2 0-.4 0-.6 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.1 1.1-1.1 2.6s1.1 3 1.3 3.2c.2.2 2.2 3.4 5.4 4.7.8.3 1.4.5 1.9.6.8.3 1.5.2 2.1.1.7-.1 1.7-.7 2-1.4.2-.7.2-1.3.1-1.4-.1-.1-.3-.2-.6-.3Z" />
-              </svg>
-              Order on WhatsApp
-            </button>
-
             <div className="bg-gray-50 border border-black/10 rounded-3xl p-7">
               <h3 className="font-bold text-xl">Need Help?</h3>
 
               <div className="space-y-4 mt-5">
-                <a href="tel:+254713428383" className="flex items-center gap-3 text-sm text-gray-600 hover:text-black">
-                  <Phone size={18} className="text-green" /> +254 713 428 383
+                <a
+                  href="tel:+254713428383"
+                  className="flex items-center gap-3 text-sm text-gray-600 hover:text-black"
+                >
+                  <Phone size={18} className="text-green" />
+                  +254 713 428 383
                 </a>
 
-                <a href="mailto:chepsuearts@gmail.com" className="flex items-center gap-3 text-sm text-gray-600 hover:text-black">
-                  <Mail size={18} className="text-green" /> chepsuearts@gmail.com
+                <a
+                  href="mailto:chepsuearts@gmail.com"
+                  className="flex items-center gap-3 text-sm text-gray-600 hover:text-black"
+                >
+                  <Mail size={18} className="text-green" />
+                  chepsuearts@gmail.com
                 </a>
 
                 <div className="flex items-center gap-3 text-sm text-gray-600">
-                  <MapPin size={18} className="text-green" /> Kenya
+                  <MapPin size={18} className="text-green" />
+                  Kenya
                 </div>
               </div>
             </div>
-
           </aside>
         </div>
       </div>
