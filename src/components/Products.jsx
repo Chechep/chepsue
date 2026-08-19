@@ -28,21 +28,6 @@ export default function Products() {
       )}
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto text-center">
-          <span className="inline-flex px-4 py-2 rounded-full border border-black/10 bg-gray-50 text-sm font-medium text-gray-700">
-            Our Collection
-          </span>
-
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-black mt-6 tracking-tight">
-            Handmade pieces.
-            <span className="block text-green mt-2">Made for you.</span>
-          </h1>
-
-          <p className="text-gray-600 text-lg leading-relaxed mt-6">
-            Explore our handcrafted art, jewellery, decor and custom creations.
-          </p>
-        </div>
-
         <div className="grid sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 mt-10">
           {products.map((product) => (
             <article key={product.id} className="group rounded-3xl overflow-hidden border border-black/20 bg-white transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
@@ -64,7 +49,6 @@ export default function Products() {
                   </div>
 
                   <div className="w-10 h-10 shrink-0 rounded-xl bg-green/10 flex items-center justify-center group-hover:scale-110 transition">
-                    <ShoppingBag size={18} className="text-green" />
                   </div>
                 </div>
 
@@ -80,7 +64,7 @@ export default function Products() {
                   </Link>
 
                   <button onClick={() => addToOrder(product)} className="bg-black text-white py-3 rounded-xl flex items-center justify-center gap-2 text-sm font-semibold hover:bg-green transition">
-                    <ShoppingBag size={17} /> Add
+                    <ShoppingBag size={17} /> Order
                   </button>
                 </div>
               </div>

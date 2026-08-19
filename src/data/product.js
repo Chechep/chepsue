@@ -5,7 +5,7 @@ const products = [
     name: "Watch Band",
     category: "Accessories",
     price: 449,
-    description: "Handmade beaded watch band.",
+    description: "Beaded watch band.",
     image: "/products/watch-band.jpg",
   },
   {
@@ -13,7 +13,7 @@ const products = [
     name: "Customized Book Mark",
     category: "Accessories",
     price: 399,
-    description: "Handcrafted customized bookmark.",
+    description: "Customized bookmark.",
     image: "/products/customised-book-mark.jpg",
   },
 
@@ -23,7 +23,7 @@ const products = [
     name: "Wrist Band",
     category: "Jewellery",
     price: 349,
-    description: "Handmade beaded wrist band.",
+    description: "Beaded wrist band.",
     image: "/products/wrist-band.jpg",
   },
   {
@@ -31,7 +31,7 @@ const products = [
     name: "Neck Piece and Earrings",
     category: "Jewellery",
     price: 599,
-    description: "Handcrafted matching neck piece and earrings.",
+    description: "Matching neck piece and earrings.",
     image: "/products/neck-piece-earrings.jpg",
   },
   {
@@ -39,7 +39,7 @@ const products = [
     name: "Neck Piece and Kenyan Bracelet",
     category: "Jewellery",
     price: 699,
-    description: "Handmade neck piece paired with a Kenyan bracelet.",
+    description: "Neck piece paired with a Kenyan bracelet.",
     image: "/products/neck-piece-kenyan-bracelet.jpg",
   },
   {
@@ -47,7 +47,7 @@ const products = [
     name: "Neck Piece and Bracelet",
     category: "Jewellery",
     price: 549,
-    description: "Handmade neck piece and bracelet combination.",
+    description: "Neck piece and bracelet combination.",
     image: "/products/neck-piece-bracelet.jpg",
   },
   {
@@ -55,7 +55,7 @@ const products = [
     name: "African Neck Piece",
     category: "Jewellery",
     price: 499,
-    description: "Handcrafted African-inspired neck piece.",
+    description: "African-inspired neck piece.",
     image: "/products/african-neck-piece.jpg",
   },
   {
@@ -63,7 +63,7 @@ const products = [
     name: "Neck Piece and Bracelet",
     category: "Jewellery",
     price: 599,
-    description: "Handmade neck piece and bracelet set.",
+    description: "Neck piece and bracelet set.",
     image: "/products/neck-piece-bracelet-599.jpg",
   },
   {
@@ -71,7 +71,7 @@ const products = [
     name: "Anklet",
     category: "Jewellery",
     price: 399,
-    description: "Handmade beaded anklet.",
+    description: "Beaded anklet.",
     image: "/products/anklet.jpg",
   },
   {
@@ -79,7 +79,7 @@ const products = [
     name: "Bracelet",
     category: "Jewellery",
     price: 349,
-    description: "Handcrafted beaded bracelet.",
+    description: "Beaded bracelet.",
     image: "/products/bracelet.jpg",
   },
   {
@@ -87,7 +87,7 @@ const products = [
     name: "Necklace",
     category: "Jewellery",
     price: 345,
-    description: "Handmade beaded necklace.",
+    description: "Beaded necklace.",
     image: "/products/necklace-345.jpg",
   },
   {
@@ -95,7 +95,7 @@ const products = [
     name: "Necklace and Chocker",
     category: "Jewellery",
     price: 699,
-    description: "Handcrafted necklace and chocker set.",
+    description: "Necklace and chocker set.",
     image: "/products/necklace-chocker.jpg",
   },
   {
@@ -103,7 +103,7 @@ const products = [
     name: "Necklace",
     category: "Jewellery",
     price: 499,
-    description: "Handmade beaded necklace.",
+    description: "Beaded necklace.",
     image: "/products/necklace-499.jpg",
   },
   {
@@ -111,7 +111,7 @@ const products = [
     name: "Customised Bracelet",
     category: "Jewellery",
     price: 245,
-    description: "Customised handmade bracelet.",
+    description: "Customised bracelet.",
     image: "/products/customised-bracelet-245.jpg",
   },
   {
@@ -119,7 +119,7 @@ const products = [
     name: "Customised Bracelet",
     category: "Jewellery",
     price: 399,
-    description: "Customised handmade bracelet.",
+    description: "Customised bracelet.",
     image: "/products/customised-bracelet-399.jpg",
   },
   {
@@ -127,7 +127,7 @@ const products = [
     name: "2pcs Baby Bracelets",
     category: "Jewellery",
     price: 245,
-    description: "Set of two handmade baby bracelets.",
+    description: "Set of two baby bracelets.",
     image: "/products/baby-bracelets-245.jpg",
   },
   {
@@ -135,7 +135,7 @@ const products = [
     name: "2 pcs Jupiter Bracelet",
     category: "Jewellery",
     price: 499,
-    description: "Set of two handmade Jupiter bracelets.",
+    description: "Set of two Jupiter bracelets.",
     image: "/products/jupiter-bracelet.jpg",
   },
   {
@@ -143,7 +143,7 @@ const products = [
     name: "2pcs Black Bracelet",
     category: "Jewellery",
     price: 399,
-    description: "Set of two handmade black bracelets.",
+    description: "Set of two black bracelets.",
     image: "/products/black-bracelet.jpg",
   },
   {
@@ -151,7 +151,7 @@ const products = [
     name: "Kenyan Flag Bracelet",
     category: "Jewellery",
     price: 249,
-    description: "Handmade bracelet inspired by the Kenyan flag.",
+    description: "Bracelet inspired by the Kenyan flag.",
     image: "/products/kenyan-flag-bracelet.jpg",
   },
   {
@@ -159,7 +159,7 @@ const products = [
     name: "Piano Bracelets",
     category: "Jewellery",
     price: 349,
-    description: "Handmade piano-style bracelets.",
+    description: "Piano-style bracelets.",
     image: "/products/piano-bracelets.jpg",
   },
   {
@@ -167,7 +167,7 @@ const products = [
     name: "Chocker and Earrings",
     category: "Jewellery",
     price: 645,
-    description: "Handcrafted matching chocker and earrings.",
+    description: "Matching chocker and earrings.",
     image: "/products/chocker-earrings.jpg",
   },
   {
@@ -175,7 +175,7 @@ const products = [
     name: "Necklace and Bracelet",
     category: "Jewellery",
     price: 745,
-    description: "Handmade necklace and bracelet set.",
+    description: "Necklace and bracelet set.",
     image: "/products/necklace-bracelet-745.jpg",
   },
 
@@ -186,7 +186,7 @@ const products = [
     category: "Home Art",
     price: 2699,
     size: '4.8 x 11.5" (120 x 290mm)',
-    description: "Handcrafted woven wall hanging.",
+    description: "Woven wall hanging.",
     image: "/products/wall-hanging-2699.jpg",
   },
   {
@@ -195,7 +195,7 @@ const products = [
     category: "Home Art",
     price: 3599,
     size: '10 x 15.5" (250 x 390mm)',
-    description: "Handcrafted decorative wall hanging.",
+    description: "Decorative wall hanging.",
     image: "/products/wall-hanging-3599.jpg",
   },
   {
@@ -204,7 +204,7 @@ const products = [
     category: "Home Art",
     price: 3499,
     size: '10 x 15.5" (250 x 390mm)',
-    description: "Handcrafted decorative wall hanging.",
+    description: "Decorative wall hanging.",
     image: "/products/wall-hanging-3499.jpg",
   },
   {
@@ -213,7 +213,7 @@ const products = [
     category: "Home Art",
     price: 3899,
     size: '13 x 25" (330 x 630mm)',
-    description: "Large handcrafted wall hanging.",
+    description: "Large wall hanging.",
     image: "/products/wall-hanging-3899.jpg",
   },
   {
@@ -222,7 +222,7 @@ const products = [
     category: "Home Art",
     price: 1599,
     size: '6" (150mm) diameter',
-    description: "Handcrafted decorative ceiling hanging.",
+    description: "Decorative ceiling hanging.",
     image: "/products/ceiling-hanging-1599.jpg",
   },
   {
@@ -231,7 +231,7 @@ const products = [
     category: "Home Art",
     price: 1799,
     size: '4.8 x 11.5" (120 x 290mm)',
-    description: "Handcrafted decorative wall hanging.",
+    description: "Decorative wall hanging.",
     image: "/products/wall-hanging-1799.jpg",
   },
   {
@@ -240,7 +240,7 @@ const products = [
     category: "Home Art",
     price: 4499,
     size: '10.5 x 16" (260 x 400mm) each',
-    description: "Pair of handcrafted wall hangings.",
+    description: "Pair of wall hangings.",
     image: "/products/2pcs-wall-hanging.jpg",
   },
   {
@@ -249,7 +249,7 @@ const products = [
     category: "Home Art",
     price: 3799,
     size: '10 x 15.5" (250 x 390mm)',
-    description: "Handcrafted decorative wall hanging.",
+    description: "Decorative wall hanging.",
     image: "/products/wall-hanging-3799.jpg",
   },
   {
@@ -267,7 +267,7 @@ const products = [
     category: "Home Art",
     price: 1799,
     size: '8 x 13" (210 x 330mm)',
-    description: "Handcrafted woven wall hanging.",
+    description: "Woven wall hanging.",
     image: "/products/wall-hanging-1799-small.jpg",
   },
   {
@@ -276,7 +276,7 @@ const products = [
     category: "Home Art",
     price: 2999,
     size: '10 x 15.5" (250 x 390mm)',
-    description: "Handcrafted decorative wall hanging.",
+    description: "Decorative wall hanging.",
     image: "/products/wall-hanging-2999.jpg",
   },
   {
@@ -285,7 +285,7 @@ const products = [
     category: "Home Art",
     price: 1499,
     size: '7 x 12" (175 x 300mm)',
-    description: "Handcrafted decorative wall art.",
+    description: "Decorative wall art.",
     image: "/products/wall-art.jpg",
   },
   {
@@ -294,7 +294,7 @@ const products = [
     category: "Home Art",
     price: 2899,
     size: '10 x 15.5" (250 x 390mm)',
-    description: "Handcrafted decorative wall hanging.",
+    description: "Decorative wall hanging.",
     image: "/products/wall-hanging-2899.jpg",
   },
   {
@@ -303,7 +303,7 @@ const products = [
     category: "Home Art",
     price: 1499,
     size: '8" (210mm) diameter',
-    description: "Handcrafted decorative dream catcher.",
+    description: "Decorative dream catcher.",
     image: "/products/dream-catcher.jpg",
   },
   {
@@ -311,7 +311,7 @@ const products = [
     name: "Bottle Art",
     category: "Home Art",
     price: 799,
-    description: "Creative handcrafted bottle art.",
+    description: "Creative bottle art.",
     image: "/products/bottle-art.jpg",
   },
 ];
