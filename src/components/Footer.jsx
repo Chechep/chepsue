@@ -1,4 +1,4 @@
-import { ArrowUp, ArrowUpRight } from "lucide-react";
+import { ArrowUp, } from "lucide-react";
 import icon from "../assets/icon.png";
 
 export default function Footer() {

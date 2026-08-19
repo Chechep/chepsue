@@ -2,7 +2,6 @@ import {
   ArrowLeft,
   Check,
   ShoppingCart,
-  Sparkles,
   Zap,
 } from "lucide-react";
 import { Link, useNavigate, useParams } from "react-router-dom";

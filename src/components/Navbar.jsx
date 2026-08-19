@@ -44,6 +44,11 @@ export default function Navbar() {
   };
 
   useEffect(() => {
+    const initializeCounts = () => {
+      updateOrderCount();
+      updateNotificationCount();
+    };
+
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
         setMenuOpen(false);
@@ -64,13 +69,8 @@ export default function Navbar() {
     window.addEventListener("storage", updateNotificationCount);
 
     window.addEventListener("chepsueOrdersUpdated", handleOrdersUpdated);
-    window.addEventListener(
-      "chepsueNotificationsUpdated",
-      handleNotificationsUpdated
-    );
-
-    updateOrderCount();
-    updateNotificationCount();
+    initializeCounts();
+    handleNotificationsUpdated();
 
     const interval = setInterval(() => {
       updateOrderCount();

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   ArrowLeft,
   CheckCircle2,
@@ -16,7 +16,9 @@ import { Link } from "react-router-dom";
 const whatsappNumber = "254713428383";
 
 export default function Order() {
-  const [orderItems, setOrderItems] = useState([]);
+  const [orderItems, setOrderItems] = useState(() => {
+    return JSON.parse(localStorage.getItem("chepsueOrders") || "[]");
+  });
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -25,14 +27,6 @@ export default function Order() {
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
-
-  useEffect(() => {
-    const saved = JSON.parse(
-      localStorage.getItem("chepsueOrders") || "[]"
-    );
-
-    setOrderItems(saved);
-  }, []);
 
   const updateItems = (items) => {
     setOrderItems(items);
