@@ -43,7 +43,7 @@ export default function Products() {
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6 mt-10">
+        <div className="grid sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 mt-10">
           {products.map((product) => (
             <article key={product.id} className="group rounded-3xl overflow-hidden border border-black/20 bg-white transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
               <Link to={`/product/${product.id}`} className="block">
