@@ -48,7 +48,7 @@ export default function Hero() {
           </div>
 
           <div className="w-full max-w-3xl mt-10">
-            <p className="text-gray-600 text-base sm:text-lg leading-8" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+            <p className="text-gray-600 text-base font-extralight sm:text-lg leading-8" style={{ fontFamily: "'DM Sans', sans-serif" }}>
               Discover handcrafted art and decor created with imagination, patience and purpose. Every piece is made to bring character and meaning into your space.
             </p>
           </div>
@@ -63,20 +63,20 @@ export default function Hero() {
 
                 return (
                   <div key={`${item.title}-${index}`} className="w-[220px] sm:w-[250px] lg:w-[270px] shrink-0">
-                    <div className="group relative h-56 sm:h-64 lg:h-72 rounded-3xl overflow-hidden bg-gray-100 shadow-lg border border-black/10">
+                    <div className="group relative h-56 sm:h-64 lg:h-72 rounded-3xl overflow-hidden">
                       <img src={item.image} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
 
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
 
                       <div className="absolute bottom-0 left-0 right-0 p-5 text-left">
                         <div className="flex items-center gap-2">
-                          <Icon size={17} className="text-green shrink-0" />
+                          <Icon size={17} className="text-sand/90 shrink-0" />
                           <h3 className="text-white text-xl font-semibold" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                             {item.title}
                           </h3>
                         </div>
 
-                        <p className="text-white/75 text-xs sm:text-sm mt-1 leading-relaxed" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                        <p className="text-gray-400 text-xs sm:text-sm mt-1 leading-relaxed" style={{ fontFamily: "'DM Sans', sans-serif" }}>
                           {item.description}
                         </p>
                       </div>
@@ -88,17 +88,16 @@ export default function Hero() {
           </div>
 
           <div className="relative w-full mx-auto mt-16">
-            <div className="absolute -top-8 -right-8 w-28 h-28 border border-green/20 rounded-full" />
-            <div className="absolute -bottom-8 -left-8 w-24 h-24 border border-black/10 rounded-full" />
+            <div className="absolute -top-8 -right-8 w-28 h-28 border border-green/40 rounded-full" />
+            <div className="absolute -bottom-8 -left-8 w-24 h-24 border border-black/20 rounded-full" />
 
-            <div className="relative min-h-[450px] sm:h-[550px] lg:h-[650px] rounded-[40px] overflow-hidden bg-gray-100 shadow-2xl flex items-center justify-center">
+            <div className="relative min-h-[450px] sm:h-[550px] lg:h-[650px] rounded-[40px] overflow-hidden flex items-center justify-center">
               <img src="/Hero-art.png" alt="Handcrafted artwork by Chepsue Arts" className="w-full h-full object-contain transition-transform duration-1000 hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
             </div>
           </div>
         </div>
 
-        <div className="mt-32 lg:mt-40 pt-16 border-t border-black/10 text-center">
+        <div className="mt-2 lg:mt-40 pt-16 border-t border-black/10 text-center">
           <div className="max-w-4xl mx-auto">
             <span className="text-xs tracking-[0.3em] uppercase text-gray-400 font-semibold" style={{ fontFamily: "'DM Sans', sans-serif" }}>
               Our Philosophy
@@ -124,11 +123,11 @@ export default function Hero() {
                     <ValueIcon size={23} className="text-green transition-transform duration-300 group-hover:scale-110" />
                   </div>
 
-                  <h3 className="text-2xl text-black mt-6 font-semibold" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                  <h3 className="text-2xl text-black mt-3 font-semibold" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                     {value.title}
                   </h3>
 
-                  <p className="text-gray-600 leading-relaxed mt-3" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                  <p className="text-gray-600 font-thin leading-relaxed mt-3" style={{ fontFamily: "'DM Sans', sans-serif" }}>
                     {value.text}
                   </p>
                 </div>
