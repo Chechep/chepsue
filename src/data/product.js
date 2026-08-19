@@ -9,15 +9,13 @@ const products = [
     image: "/products/watch-band.jpg",
   },
   {
-    id: "customised-book-mark",
-    name: "Customized Book Mark",
-    category: "Accessories",
-    price: 399,
-    description: "Customized bookmark.",
-    image: "/products/customised-book-mark.jpg",
+    id: "necklace-345",
+    name: "Necklace",
+    category: "Jewellery",
+    price: 345,
+    description: "Beaded necklace.",
+    image: "/products/necklace-345.jpg",
   },
-
-  // JEWELLERY
   {
     id: "wrist-band",
     name: "Wrist Band",
@@ -81,14 +79,6 @@ const products = [
     price: 349,
     description: "Beaded bracelet.",
     image: "/products/bracelet.jpg",
-  },
-  {
-    id: "necklace-345",
-    name: "Necklace",
-    category: "Jewellery",
-    price: 345,
-    description: "Beaded necklace.",
-    image: "/products/necklace-345.jpg",
   },
   {
     id: "necklace-and-chocker",
@@ -177,6 +167,14 @@ const products = [
     price: 745,
     description: "Necklace and bracelet set.",
     image: "/products/necklace-bracelet-745.jpg",
+  },
+  {
+    id: "customised-book-mark",
+    name: "Customized Book Mark",
+    category: "Accessories",
+    price: 399,
+    description: "Customized bookmark.",
+    image: "/products/customised-book-mark.jpg",
   },
 
   // HOME ART
