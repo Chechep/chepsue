@@ -88,9 +88,6 @@ export default function Hero() {
           </div>
 
           <div className="relative w-full mx-auto mt-16">
-            <div className="absolute -top-8 -right-8 w-28 h-28 border border-green/40 rounded-full" />
-            <div className="absolute -bottom-8 -left-8 w-24 h-24 border border-black/20 rounded-full" />
-
             <div className="relative min-h-[450px] sm:h-[550px] lg:h-[650px] rounded-[40px] overflow-hidden flex items-center justify-center">
               <img src="/Hero-art.png" alt="Handcrafted artwork by Chepsue Arts" className="w-full h-full object-contain transition-transform duration-1000 hover:scale-105" />
             </div>
