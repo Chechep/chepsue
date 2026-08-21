@@ -62,7 +62,7 @@ export default function Hero() {
                 const Icon = item.icon;
 
                 return (
-                  <div key={`${item.title}-${index}`} className="w-[220px] sm:w-[250px] lg:w-[270px] shrink-0">
+                  <div key={`${item.title}-${index}`} className="w-[220px] sm:w-[220px] lg:w-[220px] shrink-0">
                     <div className="group relative h-56 sm:h-64 lg:h-72 rounded-3xl overflow-hidden">
                       <img src={item.image} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
 
@@ -87,7 +87,7 @@ export default function Hero() {
             </div>
           </div>
 
-          <div className="relative w-full mx-auto mt-6">
+          <div className="relative w-full mx-auto mt-2">
             <div className="relative min-h-[450px] sm:h-[550px] lg:h-[650px] overflow-hidden flex items-center justify-center">
               <img src="/Hero-art.png"
               alt="Handcrafted artwork by Chepsue Arts"
