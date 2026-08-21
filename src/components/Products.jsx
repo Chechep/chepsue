@@ -75,7 +75,7 @@ export default function Products() {
   return (
     <section
       id="products"
-      className="min-h-screen bg-white pt-20 pb-20"
+      className="min-h-screen bg-white pt-0 pb-20"
     >
       {/* SUCCESS TOAST */}
       {toast && (
