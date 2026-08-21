@@ -73,20 +73,20 @@ const products = [
     image: "/products/neck-piece-bracelet.jpg",
   },
   {
-    id: "african-neck-piece",
-    name: "African Neck Piece",
-    category: "Jewellery",
-    price: 499,
-    description: "African-inspired neck piece.",
-    image: "/products/african-neck-piece.jpg",
-  },
-  {
     id: "neck-piece-and-bracelet-599",
     name: "Neck Piece and Bracelet",
     category: "Jewellery",
     price: 599,
     description: "Neck piece and bracelet set.",
     image: "/products/neck-piece-bracelet-599.jpg",
+  },
+  {
+    id: "african-neck-piece",
+    name: "African Neck Piece",
+    category: "Jewellery",
+    price: 499,
+    description: "African-inspired neck piece.",
+    image: "/products/african-neck-piece.jpg",
   },
   {
     id: "necklace-and-chocker",
@@ -311,6 +311,14 @@ const products = [
     price: 799,
     description: "Creative bottle art.",
     image: "/products/bottle-art.jpg",
+  },
+  {
+    id: "tote-bag",
+    name: "Tote Bag",
+    category: "Accessories",
+    price: 499,
+    description: "Handmade tote bag.",
+    image: "/products/tote-bag.jpg",
   },
 ];
 

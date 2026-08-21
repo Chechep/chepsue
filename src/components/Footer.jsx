@@ -52,7 +52,7 @@ export default function Footer() {
 
               {/* Phone */}
               <a
-                href="tel:+254713428383"
+                href="tel:+254783800900"
                 className="flex items-center gap-3 text-gray-800 hover:text-black transition"
               >
 
@@ -64,7 +64,7 @@ export default function Footer() {
                 >
                   <path d="M6.62 10.79a15.46 15.46 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1C10.16 21 3 13.84 3 5a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.25 1.02l-2.2 2.2z" />
                 </svg>
-                +254 713 428 383
+                +254 783 800 900
               </a>
 
 
@@ -105,7 +105,7 @@ export default function Footer() {
 
               {/* Instagram */}
               <a
-                href="#contact"
+                href="instagram.com/chepsuearts"
                 className="flex items-center gap-3 text-gray-800 hover:text-black transition"
               >
 

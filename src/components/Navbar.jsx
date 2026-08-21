@@ -220,7 +220,7 @@ export default function Navbar() {
             </button>
 
             {menuOpen && (
-              <div className="absolute right-0 top-12 w-32 bg-white/95 backdrop-blur-md border border-black/10 rounded-xl shadow-lg py-1">
+              <div className="absolute right-0 top-16 w-32 bg-white/95 backdrop-blur-md border border-black/10 rounded-xl shadow-lg py-1">
                 {navLinks.map((link) => (
                   <NavLink
                     key={link.path}

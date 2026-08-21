@@ -1,6 +1,6 @@
-import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
+import { ArrowUpRight, Mail, MapPin, Phone, } from "lucide-react";
 
-const whatsappNumber = "254713428383";
+const whatsappNumber = "254783800900";
 
 export default function Contact() {
   const contactDetails = [
@@ -8,8 +8,8 @@ export default function Contact() {
       icon: Phone,
       title: "Phone",
       label: "Speak with us",
-      value: "+254 713 428 383",
-      href: "tel:+254713428383",
+      value: "+254 783 800 900",
+      href: "tel:+254783800900",
     },
     {
       icon: Mail,
@@ -20,16 +20,16 @@ export default function Contact() {
     },
     {
       icon: MapPin,
-      title: "Location",
+      title: "Kenya",
       label: "Based in",
-      value: "Kenya",
+      value: "Nairobi",
       href: "#",
     },
   ];
 
   const openWhatsApp = () => {
     const message = encodeURIComponent(
-      "Hello Chepsue Arts, I would like to start a conversation about your artwork."
+      "Hello Chepsue Arts, I am interested in your artwork."
     );
 
     window.open(
@@ -174,8 +174,18 @@ export default function Contact() {
               className="shrink-0 inline-flex items-center justify-center gap-3 bg-white text-black px-7 py-4 rounded-full font-semibold transition-all duration-300 hover:bg-green hover:text-white hover:scale-105"
               style={{ fontFamily: "'DM Sans', sans-serif" }}
             >
-              Start a Conversation
-              <ArrowUpRight size={18} />
+              Lets chat on WhatsApp
+
+              <svg
+                viewBox="0 0 32 32"
+                className="w-6 h-6"
+                aria-hidden="true"
+              >
+                <path
+                  fill="#25D366"
+                  d="M16 5.3A10.7 10.7 0 0 0 6.8 21.4L5.5 26.5l5.2-1.3A10.7 10.7 0 1 0 16 5.3Zm0 19.4c-1.7 0-3.3-.5-4.7-1.4l-.3-.2-3.1.8.8-3-.2-.3a8.7 8.7 0 1 1 7.5 4.1Zm4.8-6.5c-.3-.2-1.7-.8-2-.9-.3-.1-.5-.2-.7.2-.2.3-.7.9-.8 1.1-.2.2-.3.2-.6.1-1.6-.8-2.7-1.5-3.7-3.2-.3-.5.3-.5.8-1.7.1-.2 0-.4 0-.6 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.1 1.1-1.1 2.6s1.1 3 1.3 3.2c.2.2 2.2 3.4 5.4 4.7.8.3 1.4.5 1.9.6.8.3 1.5.2 2.1.1.7-.1 1.7-.7 2-1.4.2-.7.2-1.3.1-1.4-.1-.1-.3-.2-.6-.3Z"
+                />
+              </svg>
             </button>
 
           </div>

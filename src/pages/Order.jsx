@@ -6,7 +6,6 @@ import {
   MapPin,
   Package,
   Phone,
-  Send,
   Trash2,
   Plus,
   Minus,
@@ -251,7 +250,7 @@ Please confirm availability, final price and delivery details.
   }
 
   return (
-    <main className="min-h-screen bg-white pt-32 pb-24">
+    <main className="min-h-screen bg-white pt-24 pb-24">
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
 
@@ -265,13 +264,7 @@ Please confirm availability, final price and delivery details.
         </Link>
 
         {/* HEADER */}
-        <div className="mt-8">
-
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-black/10 bg-gray-50 text-sm font-medium">
-            <Package size={16} />
-            Your Order
-          </span>
-
+        <div className="mt-2">
           <h1
             className="text-5xl md:text-6xl text-black mt-5 font-medium leading-[0.95]"
             style={{
@@ -285,14 +278,13 @@ Please confirm availability, final price and delivery details.
           </h1>
 
           <p className="text-gray-600 mt-5 max-w-2xl leading-7">
-            Review your pieces, choose your options and
-            send your order to Chepsue Arts.
+            Review your pieces, choose your options and place your order.
           </p>
 
         </div>
 
         {/* CONTENT */}
-        <div className="grid lg:grid-cols-[1fr_380px] gap-8 mt-12">
+        <div className="grid lg:grid-cols-[1fr_380px] gap-8 mt-2">
 
           {/* LEFT */}
           <div className="space-y-6">
@@ -352,7 +344,7 @@ Please confirm availability, final price and delivery details.
 
                 </div>
               ) : (
-                <div className="space-y-5 mt-6">
+                <div className="space-y-5 mt-2">
 
                   {orderItems.map((item) => (
                     <article
@@ -371,7 +363,7 @@ Please confirm availability, final price and delivery details.
 
                         <div className="flex-1 min-w-0">
 
-                          <div className="flex justify-between gap-3">
+                          <div className="flex justify-between gap-2">
 
                             <div>
 
@@ -399,12 +391,12 @@ Please confirm availability, final price and delivery details.
 
                           {item.price && (
                             <p className="font-semibold mt-3">
-                              KSh{" "}
+                              KSh.{" "}
                               {item.price.toLocaleString()}
                             </p>
                           )}
 
-                          <div className="grid sm:grid-cols-3 gap-3 mt-4">
+                          <div className="grid sm:grid-cols-3 gap-3 mt-2">
 
                             <input
                               value={item.size || ""}
@@ -492,7 +484,7 @@ Please confirm availability, final price and delivery details.
                 Customer Details
               </h2>
 
-              <div className="grid md:grid-cols-2 gap-5 mt-6">
+              <div className="grid md:grid-cols-2 gap-5 mt-4">
 
                 <input
                   name="name"
@@ -540,20 +532,7 @@ Please confirm availability, final price and delivery details.
                 />
 
               </div>
-
               <button
-                type="submit"
-                disabled={!orderItems.length}
-                className="w-full mt-6 bg-black text-white py-4 rounded-xl font-semibold flex items-center justify-center gap-3 hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed transition"
-              >
-                <Send size={18} />
-                Submit Order Request
-              </button>
-
-            </form>
-
-            {/* WHATSAPP */}
-            <button
               onClick={orderOnWhatsApp}
               disabled={!orderItems.length}
               className="w-full flex items-center justify-center gap-3 bg-black/5 border border-black/10 text-black rounded-2xl py-4 font-semibold hover:bg-black/10 disabled:opacity-40 disabled:cursor-not-allowed transition"
@@ -574,6 +553,7 @@ Please confirm availability, final price and delivery details.
 
             </button>
 
+            </form>
           </div>
 
           {/* RIGHT SIDEBAR */}
