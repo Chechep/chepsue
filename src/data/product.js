@@ -318,7 +318,7 @@ const products = [
     category: "Accessories",
     price: 499,
     description: "Handmade tote bag.",
-    image: "/products/tote-bag.jpg",
+    image: "/products/tote-bag-black.jpg",
   },
 ];
 
