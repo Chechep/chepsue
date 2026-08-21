@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const whatsappNumber = "254713428383";
+const whatsappNumber = "254783800900";
 
 export default function Order() {
   const [orderItems, setOrderItems] = useState(() => {
@@ -587,7 +587,7 @@ Please confirm availability, final price and delivery details.
                     {orderItems.some(
                       (item) => item.price
                     )
-                      ? `KSh ${totalPrice.toLocaleString()}`
+                      ? `KSh. ${totalPrice.toLocaleString()}`
                       : "To confirm"}
                   </span>
 
@@ -613,14 +613,14 @@ Please confirm availability, final price and delivery details.
               <div className="space-y-4 mt-5">
 
                 <a
-                  href="tel:+254713428383"
+                  href="tel:+254783800900"
                   className="flex items-center gap-3 text-sm text-gray-600 hover:text-black"
                 >
                   <Phone
                     size={18}
                     className="text-green"
                   />
-                  +254 713 428 383
+                  +254 783 800 900
                 </a>
 
                 <a
