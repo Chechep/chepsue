@@ -87,9 +87,11 @@ export default function Hero() {
             </div>
           </div>
 
-          <div className="relative w-full mx-auto mt-16">
+          <div className="relative w-full mx-auto mt-6">
             <div className="relative min-h-[450px] sm:h-[550px] lg:h-[650px] rounded-[40px] overflow-hidden flex items-center justify-center">
-              <img src="/Hero-art.png" alt="Handcrafted artwork by Chepsue Arts" className="w-full h-full object-contain transition-transform duration-1000 hover:scale-105" />
+              <img src="/Hero-art.png"
+              alt="Handcrafted artwork by Chepsue Arts"
+              className="w-full h-full object-cover transition-transform duration-1000 hover:scale-105" />
             </div>
           </div>
         </div>
