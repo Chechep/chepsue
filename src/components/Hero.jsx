@@ -43,17 +43,17 @@ export default function Hero() {
           <div className="max-w-5xl mx-auto">
             <h1 className="text-6xl sm:text-7xl lg:text-8xl text-black leading-[0.9] tracking-[-0.03em] font-medium" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
               Handcrafted art that tells
-              <span className="block italic text-green mt-3">your story.</span>
+              <span className="block italic text-green mt-1">your story.</span>
             </h1>
           </div>
 
-          <div className="w-full max-w-3xl mt-10">
+          <div className="w-full max-w-3xl mt-6">
             <p className="text-gray-600 text-base font-extralight sm:text-lg leading-8" style={{ fontFamily: "'DM Sans', sans-serif" }}>
               Discover handcrafted art and decor created with imagination, patience and purpose. Every piece is made to bring character and meaning into your space.
             </p>
           </div>
 
-          <div className="relative w-full overflow-hidden mt-6">
+          <div className="relative w-full overflow-hidden mt-4">
             <div className="absolute left-0 top-0 bottom-0 w-20 sm:w-15 lg:w-20 bg-gradient-to-r from-white via-white/80 to-transparent z-10 pointer-events-none" />
             <div className="absolute right-0 top-0 bottom-0 w-20 sm:w-15 lg:w-20 bg-gradient-to-l from-white via-white/80 to-transparent z-10 pointer-events-none" />
 

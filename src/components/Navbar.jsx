@@ -100,7 +100,7 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="fixed top-4 left-4 right-4 z-50 bg-white/10 backdrop-blur-md border border-black/10 rounded-xl shadow-sm">
+    <nav className="fixed top-2 left-6 right-6 z-50 bg-white/10 backdrop-blur-md border border-black/10 rounded-xl shadow-sm">
       {/* Luxury Fonts */}
       <link rel="preconnect" href="https://fonts.googleapis.com" />
 
